@@ -1,6 +1,9 @@
 import { useReducer } from "react";
 import { CounterState } from "./interfaces/interfaces";
 import { counterReducer } from "./state/counterReducer";
+//import { doIncreaseBy, doReset } from "./actions/actions";
+// Como arriba podemos tener un monton de importaciones
+import * as CounterActions from "./actions/actions";
 
 // Aqui vamos a factorizar el codigo separando la logica
 // Tenemos la libertad de crearnos el Filersystem como mejor nos plasca, este caso como el patron del Reducer
@@ -14,21 +17,22 @@ const INITIAL_STATE: CounterState = {
     changes: 0,
 }
 
-// Mas adelante vamos a trabajar con las Actions Creators que son generadores de acciones porque asi como tenemos implementado el patron
-// del reducer es que si en el futuro requerimos hacer un cambio aunque sea muy sutil entonces tendremos
-// que implementar ese cambio en todos los archivos donde se implementaba esa accion uno por uno manualmente modificarlo
-// Lo mejor es tener centralizada la creacion de acciones y de esa manera daber cual fue disparada y si hay que hacer un cambio de ese 
-// tipo ya se modifique en todos los archivos
-
 export const CounterReducerComponent = () => {
     const [counterState, dispatch] = useReducer(counterReducer, INITIAL_STATE);
 
     const handlerReset = () => {
-        dispatch({ type: 'reset' });
+        //dispatch({ type: 'reset' });
+
+        // Ahora llamamos asi el dispatch
+        // El doReset lo que va a hacer es mandar a llamar la accion que es lo que nos retorna esta funcion en forma de objeto
+        // Asi la ventaja que tenemos es que si cambiamos el ombre de la accion en el "actions.ts" el cambio solo lo tenemos que hacer en ese archivo y en 
+        // el archivo de "counterReducer.ts" dentro del Switch/case (Incluso todabia lo podemos mejorar creando un objeto el cual usariamos en todo 
+        // donde se tiene el nombre y los cambios solo se harian ahi, asi como en el patron REDUX)
+        dispatch( CounterActions.doReset() );
     }
 
     const increaseBy = (value: number) => {
-        dispatch({ type: 'increaseBy', payload: {value} });
+        dispatch( CounterActions.doIncreaseBy(value) );
     }
 
     return (
