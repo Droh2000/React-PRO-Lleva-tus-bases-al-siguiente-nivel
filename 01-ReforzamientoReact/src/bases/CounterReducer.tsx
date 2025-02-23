@@ -43,11 +43,15 @@ const counterReducer = ( state:CounterState, action: CounterAction): CounterStat
                 changes: 0,
                 previous: 0
             }
+        // La ventaja de usar un useReducer es que podemos hacer diferentes modificaciones basados en diferentes casos y dependiendo de los payload
+        // podemos generar un nuevo estado, esto es mas facil que tener un State muy grande
+        // Cuando es buena idea usar un useReducer es cuando el estado es muy grande y requerimos saber el valor del estado anterior o muchas que acciones
+        // que podemos programar y sabemos que se va a disparar muchas veses
         case 'increaseBy':    
             return{
-                counter: 0,
-                changes: 0,
-                previous: 0
+                counter: state.counter+action.payload.value,
+                changes: state.changes+1,
+                previous: state.counter
             }
         default:
             return state;
@@ -73,20 +77,36 @@ export const CounterReducerComponent = () => {
             Asi que de este podemos desestructurar estas propiedades que las que se usaran 
         la funcion "dispatch" se encrga de ejecutar las acciones
     */
-    const [{ counter }, dispatch] = useReducer(counterReducer, INITIAL_STATE);
+    const [counterState, dispatch] = useReducer(counterReducer, INITIAL_STATE);
 
-    const handlerClick = () => {
+    const handlerReset = () => {
         // Aqui se manda la accion al reducer, esa accion es la que se envia como parametro a la funcion Reducer que se va
         // al Switch/case y dentro ejecuta la logica correspondiente del nuevo estado y React con el useReducer sabe que el
         // esta cambio por consecuencia tiene que redibujar lo que tenga que redibujar
         dispatch({ type: 'reset' });
     }
 
+    const increaseBy = (value: number) => {
+        dispatch({ type: 'increaseBy', payload: {value} });
+    }
+
     return (
         <>
-            <h1>Counter Reducer: { counter }</h1>
+            <h1>Counter Reducer</h1>
+            <pre>
+                { JSON.stringify( counterState, null, 2) }
+            </pre>
 
-            <button onClick={ handlerClick }>
+            <button onClick={ () => increaseBy(1) }>
+                +1
+            </button>
+            <button onClick={ () => increaseBy(5) }>
+                +5
+            </button>
+            <button onClick={ () => increaseBy(10) }>
+                +10
+            </button>
+            <button onClick={ handlerReset }>
                 Reset
             </button>
         </>
