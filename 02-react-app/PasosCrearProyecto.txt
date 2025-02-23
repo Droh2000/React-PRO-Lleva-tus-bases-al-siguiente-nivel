@@ -1,0 +1,6 @@
+Ubicados en la ruta principal del proyecto;
+    * yarn create vite -> Se elige el nombre del proyecto -> Despues se elige el Typescirp
+Ubicado dentro de la carpeta creada
+    * yarn
+Ejecutar:
+    * yarn dev
