@@ -4,3 +4,9 @@ Ubicado dentro de la carpeta creada
     * yarn
 Ejecutar:
     * yarn dev
+
+Configurar sistema de rutas (React Router)
+    Instalacion:
+        - yarn add react-router-dom
+    Despues nos creamos un componente donde podamos definir las rutas principales
+        routes -> Navigation.tsx
