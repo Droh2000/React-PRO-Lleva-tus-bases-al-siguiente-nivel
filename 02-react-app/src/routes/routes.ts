@@ -21,14 +21,19 @@ interface RouteType {
     name: string;
 }
 
-// Implememtacion del LazyLoad
-// Tod0 empieza definiendo un componente que va a ser cargado bajo demanda 
-// usando el metodo de React "lazy()" el cual nos permite cargar el componente de esta manera
-// Los componentes que vayamos a cargar por LazyLoad deben de tener una exportacion por defecto
-// sino tendremos un error al importarlos en esta linea
-const Lazy1 = lazy(() => import('../01-lazyload/pages/LazyPage1'));
-const Lazy2 = lazy(() => import('../01-lazyload/pages/LazyPage2'));
-const Lazy3 = lazy(() => import('../01-lazyload/pages/LazyPage3'));
+/* Implememtacion del LazyLoad
+   Tod0 empieza definiendo un componente que va a ser cargado bajo demanda 
+   usando el metodo de React "lazy()" el cual nos permite cargar el componente de esta manera
+   Los componentes que vayamos a cargar por LazyLoad deben de tener una exportacion por defecto
+   sino tendremos un error al importarlos en esta linea
+
+   Aqui vamos a implementarle para cambiar el nombre a los chunks
+   Uno que se le pada dar a esto en la renombracion es cuando queremos manejar la estretegia de cache, sacar estadistica con PWA  para saber cual de 
+   todos los componentes o modulos pesa mas
+*/
+const Lazy1 = lazy(() => import(/* yarnChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
+const Lazy2 = lazy(() => import(/* yarnChunkName: "LazyPage2" */ '../01-lazyload/pages/LazyPage2'));
+const Lazy3 = lazy(() => import(/* yarnChunkName: "LazyPage3" */ '../01-lazyload/pages/LazyPage3'));
 
 export const routes: RouteType[] = [
     {

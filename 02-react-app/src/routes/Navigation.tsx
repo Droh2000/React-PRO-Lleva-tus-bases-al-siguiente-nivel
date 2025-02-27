@@ -19,6 +19,8 @@ export const Navigation = () => {
             no se volvera a generar a otro archivo sino que usara ese mismo que ya se habia creado 
 
             Se recomiendo renombrar los Chunks para saber identificar los componentes y gestionarlos mejor para saber cual pesa mas o menos
+
+            No sale tan bien tener todos los comoponentes con Lazyload ya que el usuario siempre veria el mensaje de cargando, lo mejor es cargar todo por modulos
         */
         <Suspense fallback={<span>Loading...</span>}>
             <BrowserRouter>
