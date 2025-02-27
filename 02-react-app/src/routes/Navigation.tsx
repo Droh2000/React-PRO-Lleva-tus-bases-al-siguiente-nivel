@@ -2,9 +2,12 @@ import { BrowserRouter, Route, NavLink, Routes, Navigate } from 'react-router-do
 
 import logo from '../assets/react.svg';
 
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
+//import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
+// Ya no requerimos la importacion de arriba porque ya las pusimos en el archivo "routes.ts"
+import { routes } from './routes';
 
 export const Navigation = () => {
+
     return (
         <BrowserRouter>
             {/* Aqui adentro definimos las rutas */}
@@ -24,7 +27,7 @@ export const Navigation = () => {
                         Dentro de pages creamos varios componentes que son los que configuramos como rutas aqui
                     */}
                     <ul>
-                        <li>
+                        {/*<li>
                             <NavLink to='/lazy1' className={ ({ isActive }) => !isActive ? 'nav-active' : ''} >Lazy 1</NavLink>
                         </li>
                         <li>
@@ -33,6 +36,25 @@ export const Navigation = () => {
                         <li>
                             <NavLink to='/lazy3' className={ ({ isActive }) => !isActive ? 'nav-active' : ''}>Lazy 3</NavLink>
                         </li>
+                        
+                            Ahora vamos a crear los Navlink de manera dinamica 
+                            Recorremos el arreglo mediante un MAP y ceamos el NavLink basado en la cantidad de elementos que tienen sus rutas
+                        */}
+                        {
+                            // Dentro del map podemos en la funcion abrir y cerrar llaves donde tenemos que poner el Return del JSX
+                            // pero como solamente vamos a retornar eso podemos hacer el return implicito asi abriendo parentesis despues de =>
+                            // Ademas del argumento de la funcion desestructuramos 
+                            routes.map(({ to, name }) => (
+                                <li key={ to }>
+                                    <NavLink 
+                                    key={to}
+                                        to={to} 
+                                        className={ ({ isActive }) => !isActive ? 'nav-active' : ''} 
+                                    >{name}
+                                    </NavLink>
+                                </li>
+                            ))
+                        }
                     </ul>
                 </nav>
 
@@ -48,12 +70,28 @@ export const Navigation = () => {
                     en una unica carga y no tener cargado de manera segmentada
                 */}
                 <Routes>
-                    {/* Cada ruta la mandamos a su componente correspondiente */}
-                    <Route path='lazy1' element={ <LazyPage1 /> } />
-                    <Route path='lazy2' element={ <LazyPage2 /> } />
-                    <Route path='lazy3' element={ <LazyPage3 /> } />
-                    {/* Esto es para cualquier otra ruta que no sea reconocida, lo mandamos al Home y con el replace es para que no pueda regresar */}
-                    <Route path='/*' element={ <Navigate to='/lazy1' replace /> } />
+                    {/*
+                        // Cada ruta la mandamos a su componente correspondiente
+                        <Route path='lazy1' element={ <LazyPage1 /> } />
+                        <Route path='lazy2' element={ <LazyPage2 /> } />
+                        <Route path='lazy3' element={ <LazyPage3 /> } />
+                        // Esto es para cualquier otra ruta que no sea reconocida, lo mandamos al Home y con el replace es para que no pueda regresar
+
+                        Creacion de las Rutas de manera dinamica
+                        (En un codigo que se implementa asi lo mejor seria crearnos un componente y solo mandarlo a exportar aqui)
+                    */}
+                    {
+                        routes.map(({path, Component}) => (
+                            <Route 
+                                key={path}
+                                path={path}
+                                element={ <Component/> } 
+                            />
+                        ))
+
+                    // Aqui abajo en en el To le pusimos la ruta estatica para no dejarsela entre comillas 
+                    }
+                    <Route path='/*' element={ <Navigate to={ routes[0].to } replace /> } />
                 </Routes>
             </div>
         </BrowserRouter>
