@@ -10,3 +10,15 @@ Configurar sistema de rutas (React Router)
         - yarn add react-router-dom
     Despues nos creamos un componente donde podamos definir las rutas principales
         routes -> Navigation.tsx
+
+LazyLoad (Carga perezosa)
+    * Esto es para poder segementar todo lo que queramos de la aplicacion para que sea cargado solo cuando sea nesesario
+        Nos ayuda a no tener que cargar toda la aplicacion y solo de acuerdo a como va ingresando el usuario al sistema
+        se empieza a cargar los modulos o los componentes, pero hay varias formas:
+            - Cargar todo mediante LazyLoad
+            - Cargar mediante modulos: En el que separamos por modulos las difierentes areas de la aplicacion y tener agrupadores
+                donde solo se relaciona lo de ese modulo
+        Hay que saber que esto no es una solucion magica en la que nos ayude a que la apliacion de React nos haga funcionar mucho mejor
+        de hecho cuando tenemos la aplicacion de manera local, es normal que funcione rapida pero lo de cargar todo modulo a modulo o 
+        coponente a componente hace que se sienta ese tiempo de carga porque en cada uno se hace una peticon al backend
+        
