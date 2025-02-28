@@ -1,4 +1,5 @@
 import { lazy, LazyExoticComponent } from "react";
+import { NoLazy } from "../01-lazyload/pages/NoLazy";
 // import { LazyPage1, LazyPage2, LazyPage3 } from "../01-lazyload/pages";
 
 // Para no perder la flexibilidad del tipado ya que pasamos de usar los componentes de tipo "React.JSX.Element"  a los componentes pero
@@ -31,12 +32,18 @@ interface RouteType {
    Uno que se le pada dar a esto en la renombracion es cuando queremos manejar la estretegia de cache, sacar estadistica con PWA  para saber cual de 
    todos los componentes o modulos pesa mas
 */
-const Lazy1 = lazy(() => import(/* yarnChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
-const Lazy2 = lazy(() => import(/* yarnChunkName: "LazyPage2" */ '../01-lazyload/pages/LazyPage2'));
-const Lazy3 = lazy(() => import(/* yarnChunkName: "LazyPage3" */ '../01-lazyload/pages/LazyPage3'));
+//const Lazy1 = lazy(() => import(/* yarnChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
+//const Lazy2 = lazy(() => import(/* yarnChunkName: "LazyPage2" */ '../01-lazyload/pages/LazyPage2'));
+//const Lazy3 = lazy(() => import(/* yarnChunkName: "LazyPage3" */ '../01-lazyload/pages/LazyPage3'));
+
+/*
+    Las lineas de arriba se comentario por la implemntacion de LazyLoad con rutas anidadas
+
+*/
+const LazyLayout = lazy(() => import(/* yarnChunkName: "LazyLayout " */ '../01-lazyload/layout/LazyLayout'));
 
 export const routes: RouteType[] = [
-    {
+    /*{
         // Estas rutas que estamos definiendo aqui son para colcarlos en el parametro "To" de "NavLink" de "Navigation.tsx"
         to: '/lazy1',
         path: 'lazy1', // Este le pusimos "path" porque ese es el nombre del parametro del componente "Route"
@@ -55,5 +62,24 @@ export const routes: RouteType[] = [
         path: 'lazy3',
         Component: Lazy3,
         name: 'Lazy-3'
+    },
+    */
+
+    // Desde la vercion de ReactRouter Dom v6 hay cambios que tenemos que implementar a To y Path
+    // Asi que para especificar el PATH queremos que todas las rutas que pasen por "/lazyload" sean procesadas ahi
+    // y para especificar eso tenemos que especificar el comodin astedisco (Esto siginifica que todo lo que venga despues sera procesado por ese path)
+    // y para navegar nos vamos a mover a esa ruta que especificamos en to
+    {
+        path: '/lazyload/*',
+        to: '/lazyload/',
+        Component: LazyLayout,
+        name: 'LazyLayout'
+    },
+    // Este componente lo estamos cargando de manera tradicional sin lazyload
+    {
+        to: '/no-lazy',
+        path: 'no-lazy',
+        Component: NoLazy,
+        name: 'No Lazy'
     },
 ]
