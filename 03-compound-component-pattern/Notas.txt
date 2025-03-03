@@ -1,0 +1,14 @@
+En esta sección aprenderemos el patrón de construcción de componentes llamado "Compound Component Pattern" 
+el cual es muy usado por Material UI, ionic y muchos otros que trabajan con componentes previamente creados 
+que se pueden anidar entre si mediante HOCs (Higher Order Components)
+
+Puntualmente aprenderemos el patrón y crearemos nuestro propio ejemplo aplicado.
+
+Un patron es una forma de hacer algo que si lo aplicamos vamos a tener ciertas ventajas
+Esto es una forma de crear nuestros componentes que nos van a dar ciertos beneficios, este tipo de patron que vamos a ver
+nos va a ayudar a que podamos armar un componente y dentro de ese componente esperar otro componente, el chiste es ver que
+dentro de ese componente podemos meter otro componente y otro componente, etc. De tal forma que tenemos un contro absoluto
+de que piezas se construyen dentro del componente. Ademas cada componente interno sabe cuantos hijos tiene, cuantos items hay
+
+El styles que estamos empleando tiene ".module" en el nombre porque si queremos cargar modulos mediante alguna importacion y 
+luego hacer referencia a las clases tiene que tener el nombre ese formato 
