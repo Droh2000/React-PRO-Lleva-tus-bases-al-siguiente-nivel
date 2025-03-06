@@ -4,25 +4,42 @@ import styles from '../styles/styles.module.css';
 // Asi para usar una clase solo llamamos: styles.Nombre_CLase
 
 import noImage from '../assets/no-image.jpg';
-import { useState } from 'react';
+import { useProduct } from '../hooks/useProduct';
 
-export const ProductCard = () => {
 
-    const [ counter, setCounter ] = useState(0);
+// Este componente sabe como es la informacion que debe de esperar
+// y asi el hijo tambien debe de esaber lo que tiene que recibir
+interface Product{
+    id: string,
+    title: string,
+    img?: string
+}
+// De los argumentos de la funcion recibimos las PROPS pero a parte de esto queremos recibir todo el Prducto
+// (Con los functional components podemos recibir mas informacion a parte de las props), entonces definamos las Props 
+// de la siguiente manera
+interface Props {
+    // Como puede que recibamos mucha informacion de aqui editamos como queremos recibir estos datos
+    product: Product
+}
+// Asi obligamos que nos tiene que mandar un producto
+export const ProductCard = ({ product }: Props) => {
 
-    const increaseBy = ( value: number ) => {
-        // tomamos el valor anterior que teniamos y con Math.max queremos que de todos los argumentos
-        // que le pasamos nos regrese el mayor, asi nos evitamos que nos regrese un valor negativo porque en ese caso
-        // nos va a regresar siempre cero
-        setCounter( prev => Math.max( prev + value, 0 ) );
-    }
+    const { counter, increaseBy } = useProduct();
 
     return (
+        /*
+            Hasta este momento esta es la forma tradicional con la que se construyen los componentes, aparte del Style que se puede resumir de una manera
+            el inconveniente es que a la hora de que le tangamos que informar al padre que hubo algun cambio (LE tenemos que mandar alguna propiedad)
+            A parte el uso del componente tienen muy poco control al respecto y solo nos pueden mandar el producto (Si queren cambiar el estilo o cambiar 
+            los atributos no van a poder, osea se tienen que definir muchas cosas) y aqui es donde vienen diferentes patrones para crear estos componentes
+            Vamos a ver la forma de crear componentes donde podamos tener mayor control al respecto
+        */
         <div className={ styles.productCard }>
-            <img className={ styles.productImg } src="./coffee-mug.png" alt="Coffe Mug" />
-            {/*<img className={ styles.productImg } src={ noImage } alt="Coffe Mug" />*/}
+            
+            {/* Preguntamos si en el Product viene el IMG entonces que use la imagen caso contrario use la otra que no contiene nada*/}    
+            <img className={ styles.productImg } src={ product.img ? product.img : noImage } alt="Coffe Mug" />
 
-            <span className={ styles.productDescription }>Coffe Mug</span>
+            <span className={ styles.productDescription }>{ product.title }</span>
 
             <div className={ styles.buttonsContainer }>
                 <button 
