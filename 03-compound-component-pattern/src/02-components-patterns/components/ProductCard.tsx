@@ -21,6 +21,63 @@ interface Props {
     // Como puede que recibamos mucha informacion de aqui editamos como queremos recibir estos datos
     product: Product
 }
+
+/*
+    Patron de composicion de componentes
+        La idea es como cuando trabajamos con el Select en el HTML donde creamos el <select> que ese es el componente padre
+        y luego internamente creamos todas las opciones (<option>), este se el mismo patron, la idea es que estas opciones
+        le dicen al componente padre la cantidad de opciones que tiene y es desde el mundo exterior que se le esta dando
+        las diferentes opcions que nesecitamos
+        Asi le damos control a los usarios de poner o quitar las opcioens que requieran, para lograr esto se requieren 
+        implementar vairas cosas:
+            1. Vamos a separar cada uno de los componentes que tenemos aqui en diferentes componentes solo llamandolos 
+               dentro de este archivo
+
+    En este primer componente hay que preguntarnos que es lo que requrimos pasar por argumento, aqui:
+        Desestructuramos la imagen y la igualamos a comillas para que sea opcional el valor y no crearnos una interfaces para eso
+        (Esta IMG hace que no requieramos llamarla desde Product que es donde la teniamos antes)
+*/
+export const ProductImage = ({ img = '' }) => {
+    return (
+        // Preguntamos si en el Product viene el IMG entonces que use la imagen caso contrario use la otra que no contiene nada
+        // Un String vacio para un ternario es concidetado que no tiene valor 
+        <img className={ styles.productImg } src={ img ? img : noImage } alt="Product" />
+    );
+}
+
+// Para hacerlo diferente, aplicamos una interface para obligar que nos pase el titulo
+export const ProductTitle = ({ title }: { title: string }) => {
+    return (
+        <span className={ styles.productDescription }>{ title }</span>
+    );
+}
+
+interface ProductButtonsProps {
+    counter: number,
+    increaseBy: (n: number) => void,
+}
+
+export const ProductButtons = ({ counter, increaseBy }:ProductButtonsProps ) => {
+    return (
+        <div className={ styles.buttonsContainer }>
+            <button 
+                className={ styles.buttonMinus }
+                onClick={ () => increaseBy( -1 ) }
+            >-</button>
+
+            <div className={ styles.countLabel }>{ counter }</div>
+
+            <button 
+                className={ styles.buttonAdd }
+                onClick={ () => increaseBy( +1 ) }
+            >+</button>
+        </div>
+    );
+}
+// Esto que hicimos desde aqui es el punto inicial del patron
+// Solo creamos un monton de componentes y en base a estas piezas el usuario podra crear el componente como el quiere
+
+
 // Asi obligamos que nos tiene que mandar un producto
 export const ProductCard = ({ product }: Props) => {
 
@@ -35,26 +92,14 @@ export const ProductCard = ({ product }: Props) => {
             Vamos a ver la forma de crear componentes donde podamos tener mayor control al respecto
         */
         <div className={ styles.productCard }>
+
+            {/* Estas son las Pieza y a esta le tenemos que mandar la imagen para que salga */}
+            <ProductImage img={ product.img }/>
             
-            {/* Preguntamos si en el Product viene el IMG entonces que use la imagen caso contrario use la otra que no contiene nada*/}    
-            <img className={ styles.productImg } src={ product.img ? product.img : noImage } alt="Coffe Mug" />
+            <ProductTitle title={ product.title } />
 
-            <span className={ styles.productDescription }>{ product.title }</span>
-
-            <div className={ styles.buttonsContainer }>
-                <button 
-                    className={ styles.buttonMinus }
-                    onClick={ () => increaseBy( -1 ) }
-                >-</button>
-
-                <div className={ styles.countLabel }>{ counter }</div>
-
-                <button 
-                    className={ styles.buttonAdd }
-                    onClick={ () => increaseBy( +1 ) }
-                >+</button>
-            </div>
-
+            {/* Hay varias maneras de constuir este, lo podriamos separar por partes pero aqui solo movemos todo */}
+            <ProductButtons counter={ counter } increaseBy={increaseBy} />
         </div>
     )
 }
