@@ -1,4 +1,4 @@
-import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components/ProductCard"
+import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components";
 
 // Aqui nos definimos productos para agregarlos a las tarjetas
 // este objeto no sabemos como va a lucir y se lo vamos a mandar al div del Style
