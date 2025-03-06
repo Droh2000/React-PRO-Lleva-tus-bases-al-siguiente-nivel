@@ -1,0 +1,9 @@
+Esta es la continuacion del Compound Component Patter ya que tenemos varios problemas asi como
+lo tenemos creado ya que no le podemos aplicar estilos porque si le definimos los estilos al componente
+padre no llegaran a los componentes hijos o si llegan pero no pasa nada.
+Con este apartado los usuarios tendra la opcion de cambiar la apariencia del objeto
+
+La idea es que podamos pasarle estilos o clases a nuestros componentes prefabricados y esos componentes 
+puedan interpretar esos estilos, hay dos tecnicas que veremos, una es que le podamos pasar el "className"
+a caualquier de los componentes que tengamos y la otra es que le podamos especificar el "Style" y que
+al especificarlos en el componente padre les pueda afectar a los componentes hijos 
