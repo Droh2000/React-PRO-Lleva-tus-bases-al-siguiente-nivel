@@ -46,7 +46,7 @@ export const ShoppingPage = () => {
                 */}
                 <ProductCard product={ product }>
                     <ProductImage/>
-                    <ProductTitle 
+                    {/*<ProductTitle 
                         title="" // Si no se lo mandamos se va a quejar porque es obligatoria 
                     />
                     
@@ -54,6 +54,11 @@ export const ShoppingPage = () => {
                         // Este es mas complicado porque ni siquiera se relaciona sus atributos con los del padre sino que 
                         // los sacamos del "useProduct" que definimos dentro del componente
                     />
+                    
+                        Despues del useContext ya no requerimos ahora si pasar los parametros
+                    */}
+                    <ProductTitle title="Titulo Cambiado"/>
+                    <ProductButtons />
                 </ProductCard>
                 {/*
 
@@ -66,14 +71,8 @@ export const ShoppingPage = () => {
                 */}
                 <ProductCard product={ product }>
                     <ProductCard.Image/>
-                    <ProductCard.Title 
-                        title="" // Si no se lo mandamos se va a quejar porque es obligatoria 
-                    />
-                    
-                    <ProductCard.Buttons
-                        // Este es mas complicado porque ni siquiera se relaciona sus atributos con los del padre sino que 
-                        // los sacamos del "useProduct" que definimos dentro del componente
-                    />
+                    <ProductCard.Title/>
+                    <ProductCard.Buttons/>
                 </ProductCard>
             </div>
         </div>
