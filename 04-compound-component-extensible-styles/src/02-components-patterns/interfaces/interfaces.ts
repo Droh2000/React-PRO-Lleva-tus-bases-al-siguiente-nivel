@@ -1,14 +1,11 @@
 import { JSX, ReactElement } from "react";
+// Para que no tenga un nombre generico le cambiamos el Alias
+import { Props as ProductCardProps } from "../components/ProductCard";
 
 export interface Product{
     id: string,
     title: string,
     img?: string
-}
-
-export interface ProductCardProps {
-    product: Product
-    children?: ReactElement | ReactElement[]
 }
 
 export interface ProductContextProps {

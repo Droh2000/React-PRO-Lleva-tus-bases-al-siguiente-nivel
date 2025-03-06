@@ -1,0 +1,4 @@
+/* Queremos que con este estilo la tarjeta pueda cambiar el fondo a oscuro */
+.bg-dark {
+    background-color: rgb(56, 56, 56);
+}

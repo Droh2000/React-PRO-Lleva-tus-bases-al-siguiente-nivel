@@ -1,4 +1,5 @@
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components";
+import '../styles/custom-styles.css';
 
 const product = {
     id: '1',
@@ -22,7 +23,19 @@ export const ShoppingPage = () => {
                     <ProductTitle title="Titulo Cambiado"/>
                     <ProductButtons />
                 </ProductCard>
-                <ProductCard product={ product }>
+
+                {/*
+                    Habilitar a nuestros componentes para que acepten el className
+                    Dentro de la carpeta Styles nos definimos un par de clases dentro del archivo
+                    "custom-styles.css" donde va a habilitar todos esos estilos de manera que nos permita
+                    definir las clases propiamente
+
+                    Aqui le definimos la clase para que acepte los estilos
+                */}
+                <ProductCard 
+                    product={ product }
+                    className="bg-dark"
+                >
                     <ProductCard.Image/>
                     <ProductCard.Title/>
                     <ProductCard.Buttons/>
