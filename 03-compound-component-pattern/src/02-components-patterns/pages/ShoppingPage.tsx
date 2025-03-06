@@ -41,6 +41,8 @@ export const ShoppingPage = () => {
                     son propiedades que estan internas en el estado del "ProductCard" no deberian de estar expuestas al mundo exterior
                     Vamos a seguir en el patron en el que en lugar de pasarle los componentes hijos internamnete al padre mejor vamos a
                     hacer que solo llamando "ComponentePadre.ComponenteHijo" 
+
+                    Esta parte la dejamos para mostrar que se puede dar el soporte de ambas formas
                 */}
                 <ProductCard product={ product }>
                     <ProductImage/>
@@ -49,6 +51,26 @@ export const ShoppingPage = () => {
                     />
                     
                     <ProductButtons
+                        // Este es mas complicado porque ni siquiera se relaciona sus atributos con los del padre sino que 
+                        // los sacamos del "useProduct" que definimos dentro del componente
+                    />
+                </ProductCard>
+                {/*
+
+                    Veamos la otra tecnica donde vemos mejor la relacion directa entre los componentes hijos y el padre
+                    y ademas podemos agreagar o quitar segun como el usuario requiera el componente y sin dar errores
+                    asi puede hacer modificaciones en el componente sin tener que modificar la logica
+
+                    Ahora requerimos que la Imagen y el Titulo lo tome del "product" y el "increaseBy" y "counter" deberian de estar
+                    relacionados al estado interno del componente padre
+                */}
+                <ProductCard product={ product }>
+                    <ProductCard.Image/>
+                    <ProductCard.Title 
+                        title="" // Si no se lo mandamos se va a quejar porque es obligatoria 
+                    />
+                    
+                    <ProductCard.Buttons
                         // Este es mas complicado porque ni siquiera se relaciona sus atributos con los del padre sino que 
                         // los sacamos del "useProduct" que definimos dentro del componente
                     />

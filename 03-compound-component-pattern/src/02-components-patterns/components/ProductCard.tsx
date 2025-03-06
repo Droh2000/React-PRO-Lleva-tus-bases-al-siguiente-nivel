@@ -112,3 +112,11 @@ export const ProductCard = ({ children, product }: Props) => {
         </div>
     )
 }
+
+/*
+    Esta es una nueva propiedad que le estamos agregando al componente padre "ProductCard" 
+    y esta propiedad apunta al componente
+*/ 
+ProductCard.Title = ProductTitle;
+ProductCard.Image = ProductImage;
+ProductCard.Button = ProductButtons;
