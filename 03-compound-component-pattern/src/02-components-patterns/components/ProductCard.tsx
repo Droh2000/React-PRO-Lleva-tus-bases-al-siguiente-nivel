@@ -5,6 +5,7 @@ import styles from '../styles/styles.module.css';
 
 import noImage from '../assets/no-image.jpg';
 import { useProduct } from '../hooks/useProduct';
+import { ReactElement } from 'react';
 
 
 // Este componente sabe como es la informacion que debe de esperar
@@ -20,6 +21,9 @@ interface Product{
 interface Props {
     // Como puede que recibamos mucha informacion de aqui editamos como queremos recibir estos datos
     product: Product
+    // Es comun aqui tengamos que defenir muchas cosas que son propias de React y podemos estar usando en la Aplicacion
+    // Lo definimos de este tipo y puede que sea solo uno o varios por eso el arreglo
+    children?: ReactElement | ReactElement[]
 }
 
 /*
@@ -78,10 +82,10 @@ export const ProductButtons = ({ counter, increaseBy }:ProductButtonsProps ) => 
 // Solo creamos un monton de componentes y en base a estas piezas el usuario podra crear el componente como el quiere
 
 
-// Asi obligamos que nos tiene que mandar un producto
-export const ProductCard = ({ product }: Props) => {
+// Asi obligamos que nos tiene que mandar un producto y le configuramos para que reciba hijos y las tenemos que defenir en los PROPS
+export const ProductCard = ({ children, product }: Props) => {
 
-    const { counter, increaseBy } = useProduct();
+    //const { counter, increaseBy } = useProduct();
 
     return (
         /*
@@ -93,13 +97,18 @@ export const ProductCard = ({ product }: Props) => {
         */
         <div className={ styles.productCard }>
 
-            {/* Estas son las Pieza y a esta le tenemos que mandar la imagen para que salga */}
+            {/*
+                Estas son las Pieza y a esta le tenemos que mandar la imagen para que salga 
             <ProductImage img={ product.img }/>
             
             <ProductTitle title={ product.title } />
 
-            {/* Hay varias maneras de constuir este, lo podriamos separar por partes pero aqui solo movemos todo */}
+                Hay varias maneras de constuir este, lo podriamos separar por partes pero aqui solo movemos todo
             <ProductButtons counter={ counter } increaseBy={increaseBy} />
+            
+            Comentamos estas lineas para generar aqui el Children
+            */}
+            { children }
         </div>
     )
 }
