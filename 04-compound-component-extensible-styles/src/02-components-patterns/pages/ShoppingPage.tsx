@@ -36,8 +36,8 @@ export const ShoppingPage = () => {
                     product={ product }
                     className="bg-dark"
                 >
-                    <ProductCard.Image/>
-                    <ProductCard.Title/>
+                    <ProductCard.Image className = "custom-image" />
+                    <ProductCard.Title className="text-white text-bold"/>
                     <ProductCard.Buttons/>
                 </ProductCard>
             </div>

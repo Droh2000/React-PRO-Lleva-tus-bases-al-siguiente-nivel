@@ -16,7 +16,7 @@ export interface ProductContextProps {
 
 export interface  ProductCardHOCProps {
     ({ children, product }: ProductCardProps): JSX.Element,
-    Title: ({ title }: { title?: string }) => JSX.Element,
-    Image: ({ img }: { img?: string }) => JSX.Element,
+    Title: ({ title, className }: { title?: string, className?: string }) => JSX.Element,
+    Image: ({ img, className }: { img?: string, className?: string }) => JSX.Element,
     Buttons: () => JSX.Element
 }
