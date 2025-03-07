@@ -39,9 +39,9 @@ export const ShoppingPage = () => {
                     product={ product }
                     className="bg-dark text-bold" // Estos estilos le afecta a todos los componentes hijos, esta mecanica la podemos hacer para modificar los botones
                 >
-                    <ProductCard.Image/>
-                    <ProductCard.Title/>
-                    <ProductCard.Buttons/>
+                    <ProductCard.Image className="custom-image"/>
+                    <ProductCard.Title className="text-bold"/>
+                    <ProductCard.Buttons className="custom-buttons"/>
                 </ProductCard>
             </div>
         </div>

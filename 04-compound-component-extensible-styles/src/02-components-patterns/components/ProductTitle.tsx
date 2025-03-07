@@ -3,7 +3,9 @@ import { ProductContext } from "./ProductCard";
 import styles from '../styles/styles.module.css';
 
 // Le vamo a crear su interface donde le asignamos el ClassName
-interface Props{ 
+// Esta es la misma interface que esperamos que sea utilizada en las dos tecnicas (Construir tecnicas basado en propiedades o armando el componente basado en componentes hijos)
+// La usamos en el "ProductCardHOCProps" del archivo "interfaces"
+export interface Props{ 
     title?: string,
     className?:string
 }
