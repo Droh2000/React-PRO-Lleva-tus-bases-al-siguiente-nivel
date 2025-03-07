@@ -43,6 +43,27 @@ export const ShoppingPage = () => {
                     <ProductCard.Title className="text-bold"/>
                     <ProductCard.Buttons className="custom-buttons"/>
                 </ProductCard>
+
+                {/* Para que acepte el Style es lo mismo donde solo la tenemos que habilitar con su tipo  
+                    Aqui podemos usar el Style y el ClassName
+                */}
+                <ProductCard 
+                    product={ product }
+                    style={{
+                        backgroundColor: '#70D1F8'
+                    }}
+                >
+                    <ProductCard.Image style={{
+                        boxShadow: '10px 10px 10px rgba(0,0,0,0.2)'
+                    }}/>
+                    <ProductCard.Title style={{
+                        fontWeight: 'bold'
+                    }}/>
+                    <ProductCard.Buttons style={{
+                        display: 'flex',
+                        justifyContent: 'end'
+                    }}/>
+                </ProductCard>
             </div>
         </div>
     )
