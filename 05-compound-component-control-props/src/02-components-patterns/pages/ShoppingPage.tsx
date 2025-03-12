@@ -60,7 +60,34 @@ export const ShoppingPage = () => {
         supimos como declararlos)
     */
     const onProductCountChange = ({ count, product }:{ count:number, product: Product }) => {
-        console.log(count, product);
+        // Vamos a construir nuestro carro de compras donde vamos a almacenar donde vamos a tener una llave, esa llave sera igual al ID del producto
+        // y a lo que apunta ese valor va a ser de tipo ProductInCart
+        //  shoppingCart[ product.id ] = {...product, count};
+        // Lo de arriba es una mala practica porque estamos mutando el estado directamente solo debemos de cambiar el estado usando el setShoppingCart
+        // Igual si queremos mostrarlo en la interface no veremos nada pero si en la consola
+        setShoppingCart( oldshoppingCart => {
+
+            // Tenemos que hacer que cuando un producto lo regresamos a CERO no tiene porque seguir apareciendo en el objeto asi que lo tenemos que borrar
+            // Asi que tenemos que removerle la propiedad al objeto oldshoppingCart
+            if( count === 0 ){
+                // Vamos a hacer la eliminacion de un objeto mediante desestructuracion
+                // Vamos a desestructurar el objeto que tenga la KEY (identificador) igual al product.id lo ponemos entre []
+                // porque asi lo declaramos y es una propiedad computada
+                const {
+                    [product.id]: toDelete, // Este es el elemento que queremos eliminar y "toDelete" es el nombre que le estamos dando
+                    ...rest // T.odo lo demas requerimos mantenerlo y le ponemos 'rest' del resto del argumentos
+                } = oldshoppingCart;
+
+                return rest;
+            }
+            
+            // Tenemos que regresar lo mismo que nos pide el State (Del mismo tipo de dato)
+            return {
+                ...oldshoppingCart,
+                // Aqui aplicamos la modificacion en el cual ponermos entre [] para que sea computada y a lo que apunta tiene que ser igual a la interface
+                [ product.id ]: { ...product, count }
+            };
+        });
     }
 
 
@@ -129,6 +156,12 @@ export const ShoppingPage = () => {
                     <ProductCard.Image className="custom-image"/>
                     <ProductCard.Buttons className="custom-buttons"/>
                 </ProductCard>
+            </div>
+
+            <div>
+                <code>
+                    { JSON.stringify( shoppingCart, null, 5 ) }
+                </code>
             </div>
 
         </div>
