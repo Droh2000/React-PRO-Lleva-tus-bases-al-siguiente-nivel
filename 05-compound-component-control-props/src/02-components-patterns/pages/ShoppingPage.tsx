@@ -54,10 +54,14 @@ export const ShoppingPage = () => {
         Queremos que nuestro componente pueda llegar a llamar esta funcion
         Pero tambien hay que saber que no solo queremos disparar la funcion sino tambien saber cual es el valor actual, si es cero no
         se tiene porque seguir disparando la funcion y saber cual articulo es el que se esta incrmentado
-    */
-   const onProductCountChange = () => {
 
-   }
+        Como la funcion onChange nos esta mandando varios argumentos los podemos desestructurar pero ademas le definimos el tipo
+        de dato especifico para que no sean ANY (En un inicio los pusimos de tipo ANY para ver como venian los argumentos y asi fue como
+        supimos como declararlos)
+    */
+    const onProductCountChange = ({ count, product }:{ count:number, product: Product }) => {
+        console.log(count, product);
+    }
 
 
     return (
@@ -77,10 +81,18 @@ export const ShoppingPage = () => {
                             key={ product.id }
                             product={ product }
                             className="bg-dark text-bold"
-                            // Tenemos que definir esta nueva propiedad en nuestro componente
-                            // onChange={ onProductCountChange } // Si lo definimos asi significa que el evento que emita el "onChange" es el primero argumento que manda a llamar la funcion
-                            // Con esto ya podemos disparar la funcion personalizada cuando el estado cambia
-                            onChange={ () => onProductCountChange() }
+                            /* Tenemos que definir esta nueva propiedad en nuestro componente
+                                    onChange={ onProductCountChange } // Si lo definimos asi significa que el evento que emita el "onChange" es el primero argumento que manda a llamar la funcion
+                                                Osea si la funcion que le mandamos espera argumentos el onChange no le mandara nada asi, entonces nos dara error
+                               Con esto ya podemos disparar la funcion personalizada cuando el estado cambia
+                               Requerimos que nos diga cual es la cantidad de elemento en el contador del producto (Este es el valor que debe emitir el onChange) para esto modificamos la interface Props de ProductCard
+
+                               Vamos a tener el incoveniente cuando estamos esperando que en la funcion nos envien el valor del contador y del producto
+                               porque los valores que el onChange esta emitiendo no son iguales en el tipo de dato a los que les estamos mandando
+                               para esto a la funcion "onProductCountChange" le especificamos los argumentos son sus tipos y asi podemos mandar a llamar la funcion
+                               como antes 
+                            */
+                            onChange={ onProductCountChange } // Asi podemos mandar los argumentos que espera la funcion
                         >
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Title className="text-bold"/>

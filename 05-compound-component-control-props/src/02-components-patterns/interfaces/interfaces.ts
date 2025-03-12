@@ -22,3 +22,9 @@ export interface  ProductCardHOCProps {
     Image: (Props: ProductImageProps) => JSX.Element,
     Buttons: (Props : ProductButttonsProps) => JSX.Element
 }
+
+// Interface para los argumentos que espera la funcion Onchange que seran los que emitamos a los componentes externos
+export interface onChangeArgs {
+    product: Product;
+    count: number;
+}
