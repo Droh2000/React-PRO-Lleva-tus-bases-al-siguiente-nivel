@@ -90,7 +90,6 @@ export const ShoppingPage = () => {
         });
     }
 
-
     return (
         <div>
             <h1>Shopping Store</h1>
@@ -139,30 +138,29 @@ export const ShoppingPage = () => {
                 Debemos de pasarle al componente de manera externa los valores y controlar lo que queremos que nos regrese
             */}
             <div className="shopping-cart">
-                <ProductCard 
-                    product={ product2 }
-                    className="bg-dark text-bold"
-                    style={{ width: '100px' }}
-                >
-                    <ProductCard.Image className="custom-image"/>
-                    <ProductCard.Buttons className="custom-buttons"/>
-                </ProductCard>
-
-                <ProductCard 
-                    product={ product1 }
-                    className="bg-dark text-bold"
-                    style={{ width: '100px' }}
-                >
-                    <ProductCard.Image className="custom-image"/>
-                    <ProductCard.Buttons className="custom-buttons"/>
-                </ProductCard>
+                {
+                    // Vamos a hacer se dibujen por cada elementos que entre en el objeto por tener el contador mayor a 0
+                    // Para esto tenemos que recorrer el objeto y en el map como argumentos tenemos esto porque es de un objeto
+                    // y Ademas haciendo el Return implicito encerrando todo entre parentesis despues de la =>
+                    Object.entries(shoppingCart).map(([ key, product ]) => (
+                        <ProductCard 
+                            key={ key }
+                            product={ product }
+                            className="bg-dark text-bold"
+                            style={{ width: '100px' }}
+                        >
+                            <ProductCard.Image className="custom-image"/>
+                            <ProductCard.Buttons className="custom-buttons" style={{ display: 'flex', justifyContent: 'center' }}/>
+                        </ProductCard>
+                    ))
+                }
             </div>
 
-            <div>
+            {/*<div>
                 <code>
                     { JSON.stringify( shoppingCart, null, 5 ) }
                 </code>
-            </div>
+            </div>*/}
 
         </div>
     )
