@@ -20,3 +20,10 @@
     color: white;
     border-color: white;
 }
+
+/* Lo usaremos en un DIV donde queremos mostrar todos los productos o articulos que tenemos a nuestra dispocicion */
+.shopping-cart {
+    position: fixed;
+    right: 10px;
+    top: 0px;
+}
