@@ -25,6 +25,7 @@ interface ProductInCart extends Product{
 
 export const ShoppingPage = () => {
     
+    // Este estado es el que tiene que ser el que controle los valores que mostremos en las tarjetas
     // Con estos datos la idea es asignarle cuantos articulos son los que estamos llevando y ese sera el estado inicial de nuestros componentes
     // El estado inicial lo declaramos como objeto porque asi podemos llegar a las propiedades de manera directa
     const [shoppingCart, setShoppingCart ] = useState<{
@@ -58,6 +59,9 @@ export const ShoppingPage = () => {
         Como la funcion onChange nos esta mandando varios argumentos los podemos desestructurar pero ademas le definimos el tipo
         de dato especifico para que no sean ANY (En un inicio los pusimos de tipo ANY para ver como venian los argumentos y asi fue como
         supimos como declararlos)
+
+        La idea es que en esta funcion el "Count" no debe de decirnos cual es el valor que tinene sino que solo saber si se esta incrementando o decrementando
+        Por lo tanto el COUNT no debe incrementarse solo emitir los valores de +1 o -1 
     */
     const onProductCountChange = ({ count, product }:{ count:number, product: Product }) => {
         // Vamos a construir nuestro carro de compras donde vamos a almacenar donde vamos a tener una llave, esa llave sera igual al ID del producto
