@@ -12,11 +12,16 @@ export interface Props {
     children?: ReactElement | ReactElement[]
     className?: string
     style?: React.CSSProperties
+    onChange?: () => void
 }
 
-export const ProductCard = ({ children, product, className, style }: Props) => {
+export const ProductCard = ({ children, product, className, style, onChange }: Props) => {
 
-    const { counter, increaseBy } = useProduct();
+    // Ahora para manejar el OnChange lo podemos hacer en muchos lugares, una solucion seria implementar aqui
+    // un useEffect que este pendiente del counter y cuando este cambie mandar a llamar el onchange
+    // Lo que pasa es que queremos que el useProduct como es el encargado de manejar el estado queremo que esa ese Hook
+    // el que maneje esta funcion (POR AHORA LE MANDAMOS LA REFERENCIA A LA FUNCION )
+    const { counter, increaseBy } = useProduct( onChange );
 
     return (
        <Provider value={{

@@ -39,6 +39,27 @@ export const ShoppingPage = () => {
         */
     });
 
+    /*
+        Hay que saber cuando el estado cambia 
+            El estado global esta en el ProductCard.tsx el cual es cambiando con el CustomHook useProduct
+            Dentro del UseProduct tenemos el contador de la tarjeta que usa un UseState, la funcion de "increaseBy"
+            termina estableciendo el nuevo valor y ahi podriamos mandar a llamar lo que este definido en el shoppingCart
+            Por ejemplo:
+                Viendo el caso de los formularios con el Input donde le especificamos la funcion "onChange" que dentro le definimos
+                una funcion que recibe un Evento que luce dependiendo de lo que queremos emitir (El onChange se emite con el evento 
+                que disparo el cambio en ese input)
+                Para nuestro caso podemos crear un evento especifico no el completo del HTML y dentro le especificamos la funcion
+                que ejecuta el trabajo 
+
+        Queremos que nuestro componente pueda llegar a llamar esta funcion
+        Pero tambien hay que saber que no solo queremos disparar la funcion sino tambien saber cual es el valor actual, si es cero no
+        se tiene porque seguir disparando la funcion y saber cual articulo es el que se esta incrmentado
+    */
+   const onProductCountChange = () => {
+
+   }
+
+
     return (
         <div>
             <h1>Shopping Store</h1>
@@ -56,6 +77,10 @@ export const ShoppingPage = () => {
                             key={ product.id }
                             product={ product }
                             className="bg-dark text-bold"
+                            // Tenemos que definir esta nueva propiedad en nuestro componente
+                            // onChange={ onProductCountChange } // Si lo definimos asi significa que el evento que emita el "onChange" es el primero argumento que manda a llamar la funcion
+                            // Con esto ya podemos disparar la funcion personalizada cuando el estado cambia
+                            onChange={ () => onProductCountChange() }
                         >
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Title className="text-bold"/>
