@@ -119,6 +119,10 @@ export const ShoppingPage = () => {
                                como antes 
                             */
                             onChange={ onProductCountChange } // Asi podemos mandar los argumentos que espera la funcion
+                            // Para ver los valores reflejados a la inversa a la tarjeta le falta el Value pero lo dificil es saber cual es el valor
+                            // Sera 0 si es la primera vez y no tenemos nada en el carro pero si tenemos algo en el carro de compras el valor que tendra sera el que tenemos en "shoppingCart"
+                            // Como puede ser que sea undefined le agregamos el ? y si es nulo le agrege 0
+                            value={shoppingCart[product.id]?.count || 0}
                         >
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Title className="text-bold"/>
@@ -160,6 +164,9 @@ export const ShoppingPage = () => {
                             style={{ width: '100px' }}
                             // Aqui le pasamos la referencia al valor
                             value={ product.count }
+                            // Asi como estaba antes estabamos solo emitiendo valores pero estos quedan en el Aire porque no estamos cambiando el estado global 
+                            // Del ShoppingCart porque no estabamos llamando la funcion del "setShoppingCart" entonces tenemos que mandar a llamar el "onProductCountchange"
+                            onChange={ onProductCountChange }   
                         >
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Buttons 
