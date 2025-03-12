@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components";
-import { Product } from "../interfaces/interfaces";
+import { Product } from '../interfaces/interfaces';
 import '../styles/custom-styles.css';
 
 const product1 = {
@@ -16,7 +17,28 @@ const product2 = {
 
 const products: Product[] = [ product1, product2 ];
 
+// Definimos el tipo de dato del useState
+// Esta interface va a tener todas las propiedades de "Product" por eso la extendemos
+interface ProductInCart extends Product{
+    count: number;
+}
+
 export const ShoppingPage = () => {
+    
+    // Con estos datos la idea es asignarle cuantos articulos son los que estamos llevando y ese sera el estado inicial de nuestros componentes
+    // El estado inicial lo declaramos como objeto porque asi podemos llegar a las propiedades de manera directa
+    const [shoppingCart, setShoppingCart ] = useState<{
+        // Para definir el tipo de dato correctamente sabemos que es un objeto asi que lo encerramos entre llaves
+        [key:string]: // El identificador es de tipo string pero lo encerramos entre [] para indicar que pueden venir varias cantidades
+        ProductInCart // Esto es lo que contendra los valores del identificadro
+    }>({
+        // la idea es ponerle un identificador que apunte al producto y ademas pasarle el contador (De cuantos productos se estan llevando)
+        /*'1': { ...product1, count: 10 },
+        '2': { ...product2, count: 2 }
+            Gracias al tipado ya no requerimos inicializar con valores como arriba
+        */
+    });
+
     return (
         <div>
             <h1>Shopping Store</h1>
