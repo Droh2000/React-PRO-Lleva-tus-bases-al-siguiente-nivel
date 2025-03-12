@@ -1,0 +1,7 @@
+El Control Props son propiedades de control que le permite a los consumidores saber en que momento cambia
+y establecerle un valor que el usuario podra manipular
+Con esto vamos a poder controlar el estado interno y la emisicion de los valores del componente
+
+La idea de poder centralizado o poder darle el control del estado de nuestros componentes y tener de mandera
+controlada como cambia el mismo (Por ejemplo al tener sincronizados como en los carros de compra que al agregar un 
+Item se ve reflejado en la pantalla principal y dentro del carro al mismo tiempo)
