@@ -28,3 +28,9 @@ export interface onChangeArgs {
     product: Product;
     count: number;
 }
+
+// Definimos el tipo de dato del useState
+// Esta interface va a tener todas las propiedades de "Product" por eso la extendemos
+export interface ProductInCart extends Product{
+    count: number;
+}
