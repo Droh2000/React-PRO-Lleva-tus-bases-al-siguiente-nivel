@@ -73,7 +73,7 @@ export const ShoppingPage = () => {
 
             // Tenemos que hacer que cuando un producto lo regresamos a CERO no tiene porque seguir apareciendo en el objeto asi que lo tenemos que borrar
             // Asi que tenemos que removerle la propiedad al objeto oldshoppingCart
-            if( count === 0 ){
+            /*if( count === 0 ){
                 // Vamos a hacer la eliminacion de un objeto mediante desestructuracion
                 // Vamos a desestructurar el objeto que tenga la KEY (identificador) igual al product.id lo ponemos entre []
                 // porque asi lo declaramos y es una propiedad computada
@@ -90,7 +90,41 @@ export const ShoppingPage = () => {
                 ...oldshoppingCart,
                 // Aqui aplicamos la modificacion en el cual ponermos entre [] para que sea computada y a lo que apunta tiene que ser igual a la interface
                 [ product.id ]: { ...product, count }
-            };
+            };*/
+
+            /* 
+                Nueva implementacion
+
+                Hay varias condiciones que tenemos que evaluar:
+                    Tenemos que verificar si tenemos un producto y si el producto existe entonces tenemos que incrementar el valor en 1
+                    o -1 pero si tenemos 0 productos y se pulsa -1 entonces no tenemos qe hacer nada, ademas hay que evaluar si no tenemos un
+                    producto y queremos incrementarlo o decrementarlo y si es cero eliminarlo
+
+                Vamos a buscarnos dentro del ShoppingCart un producto que tenga el ID que le pasemos
+                pero esto puede ser nulo la primera vez, en ese caso lo creamos usando el producto que nos emite el "onProductCountChange"
+                y le pasamos el count en 0 porque eso significa que si esta en nulo entonces no existe ningun producto
+                Con esto ya nos evitamos implementar varios IF/ELSE
+            */
+           const productInCart: ProductInCart = oldshoppingCart[product.id] || { ...product, count: 0 };
+
+            // Evaluamos para saber si requerimos incrementarlo o no
+            // La logica de esta funcion MAth.max es que nos regresa el mayor de los dos valores que le pasamos
+            // en el caso de que el Count sea 0 y le sumamos lo del product nos dara -1 pero como se compara con el 0 nos regresara 0
+            // asi que en la interfaz no veremos el -1
+            if( Math.max( productInCart.count + count, 0 ) > 0 ){
+                // Significa que podemos incrementarlo
+                productInCart.count += count;
+                // Regresamos el nuevo estado que nesecita el ShoppingCart
+                return {
+                    ...oldshoppingCart,
+                    [product.id]: productInCart
+                }
+            }
+
+            // Aqui significa que hay que borrar el producto ya que el articulo no existe o la sumatoria va a ser menor a cero
+            const { [product.id]: toDelete, ...rest } = oldshoppingCart;
+
+            return rest;
         });
     }
 
