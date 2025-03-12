@@ -143,14 +143,29 @@ export const ShoppingPage = () => {
                     // Para esto tenemos que recorrer el objeto y en el map como argumentos tenemos esto porque es de un objeto
                     // y Ademas haciendo el Return implicito encerrando todo entre parentesis despues de la =>
                     Object.entries(shoppingCart).map(([ key, product ]) => (
+                        /*
+                            Sincronizar los valores en los contadores
+                                Siguiendo la ideologia de React todo es ReadOnly donde si queremos cambiar un valor tenemos que mandar a llamar una funcion la cual
+                                manda a llamar la funcion que cambia el estado y el estado es el que redibuja el componente que al redibujarse tiene el nuevo valor
+
+                                Al cambiar los botones de incremento sabemos que viene siempre vendra un valor, este lo podremos ver si colocamos
+                                    <ProductTitle title={`${product.count}`}/>
+                                Con solo esto veremos que si incrementamos en las tarjetas principilaes tambien se incrementara en el Carro de compras, cada vez que nosotros cambiamos el estado
+                                el estado se reconstruye y react cambia los lugares donde cambio algun valor
+                        */
                         <ProductCard 
                             key={ key }
                             product={ product }
                             className="bg-dark text-bold"
                             style={{ width: '100px' }}
+                            // Aqui le pasamos la referencia al valor
+                            value={ product.count }
                         >
                             <ProductCard.Image className="custom-image"/>
-                            <ProductCard.Buttons className="custom-buttons" style={{ display: 'flex', justifyContent: 'center' }}/>
+                            <ProductCard.Buttons 
+                                className="custom-buttons" 
+                                style={{ display: 'flex', justifyContent: 'center' }}
+                            />
                         </ProductCard>
                     ))
                 }

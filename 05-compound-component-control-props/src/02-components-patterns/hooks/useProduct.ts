@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { onChangeArgs, Product } from '../interfaces/interfaces';
 
 // Esto es lo que va a recibir el useProduct
 interface useProductArgs {
     product :Product;
     onChange?: ( args: onChangeArgs ) => void// Le ponemos que sea opcional para que indicar que puede venir o no y no nos marque error en el ProductCard
+    value?: number
 }
 
 // Recibe un objeto que luce como los argumentos de la interface y desestructuramos el onchange
-export const useProduct = ( { onChange, product }: useProductArgs ) => {
+// Como el "value" puede ser nulo al ser opcional le agregamos el valor por defecto para el contador 
+export const useProduct = ( { onChange, product, value = 0 }: useProductArgs ) => {
 
-    const [ counter, setCounter ] = useState(0);
+    // Este VALUE aqui se pone solo como el valor inicial pero si lo dejamos hasta aqui no seguira cambiando (ya que el useState no vuelve a ejecutarse solo mantiene el estado)
+    const [ counter, setCounter ] = useState(value);
 
     // Cuando se llame esta funcion, a parte de generar el nuevo valor, lo establecemos en el estado y si la funcion onchange exite la emitimos con sus dos argumentos
     const increaseBy = ( value: number ) => {
@@ -30,6 +33,11 @@ export const useProduct = ( { onChange, product }: useProductArgs ) => {
         // que son el Product y el Count
         onChange && onChange({ count: newValue, product });
     }
+
+    // Estamos al pendiente de actualizar los valores cada vez que el VALUE cambia
+    useEffect(() => {
+        setCounter( value );
+    }, [value]);
 
     return {
         counter,
