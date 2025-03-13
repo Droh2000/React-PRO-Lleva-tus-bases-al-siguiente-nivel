@@ -24,13 +24,15 @@ export interface Props {
 export const ProductCard = ({ children, product, className, style, onChange, value, initialValues }: Props) => {
 
     // El nuevo "initialValues" se lo tenemos que mandar al que maneja nuestro estado que es el "useProduct"
-    const { counter, increaseBy } = useProduct({ onChange, product, value, initialValues });
+    // Aqui tenemos que sacar el maxCount y darselo al provider para poder obtenerlo en el ProductButtons
+    const { counter, increaseBy, maxCount } = useProduct({ onChange, product, value, initialValues });
 
     return (
        <Provider value={{
             counter,
             increaseBy,
-            product
+            product,
+            maxCount
        }}>
         <div 
             className={ `${styles.productCard} ${ className }` }

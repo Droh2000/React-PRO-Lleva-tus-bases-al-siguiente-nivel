@@ -58,3 +58,10 @@
 .buttonAdd:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+/* Propiead para poder desactivar el boton cuando se llegue al limite del contador */
+.disable {
+    border-color: grey !important;
+    border-left: 1px solid white !important;
+    color: gray !important;
+}

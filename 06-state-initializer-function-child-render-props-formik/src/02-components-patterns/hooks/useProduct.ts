@@ -58,6 +58,8 @@ export const useProduct = ( { onChange, product, value = 0, initialValues }: use
 
     return {
         counter,
-        increaseBy
+        increaseBy,
+        // Regresamos este valor para poder bloquear el boton de incremento cuando se llega al maximo
+        maxCount: initialValues?.maxCount
     }
 }
