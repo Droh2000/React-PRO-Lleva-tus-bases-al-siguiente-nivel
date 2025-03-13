@@ -65,3 +65,7 @@
     border-left: 1px solid white !important;
     color: gray !important;
 }
+/* Para ocultar un boton en caso de que se llegue al maximo del contador */
+.hideButton{
+    display: none;
+}

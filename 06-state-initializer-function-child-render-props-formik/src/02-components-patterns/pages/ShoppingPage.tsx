@@ -1,6 +1,7 @@
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components";
 import '../styles/custom-styles.css';
 import { products } from "../data/products";
+import styles from '../styles/styles.module.css';
 
 // Seleccionamos cualquier producto que queramos
 const product = products[0];
@@ -38,13 +39,37 @@ export const ShoppingPage = () => {
             >
                 {
                     // Des los args podemos desestructurar y tomar lo que nos intereses
-                    ({ reset }) => (
+                    ({ reset,count,increaseBy, isMaxCountReached }) => (
                         <>
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Title className="text-bold"/>
                             <ProductCard.Buttons className="custom-buttons"/>
 
                             <button onClick={ reset }>Reset</button>
+
+                            {/* Con esto podemos ver todos los valores y los argumentos que se reciben  
+                                (Aqui no van a aparecer las referencias de las funciones)
+                            
+                                JSON.stringify( args, null, 3 )
+
+                                Ahora vamos a aprovechar para poder agregar mas botones, cada uno con su respectiva logica
+                            */}
+                            <button onClick={ () => increaseBy(-2) }>-2</button>
+
+                            {/* Si no se llega al isMAxCount mostrar el boton sino ocultar */}
+                            <button
+                                className={`${isMaxCountReached && styles.hideButton}`}
+                                onClick={ () => increaseBy(2) }
+                            >+2</button>
+                            {/*
+                                Otra forma de resolver lo de arriba es dentro de las {} llamar una funcion autoinvocada
+                                y si se cumple la condicion del isMax entones muestra el boton
+                            */}
+                            {
+                                /*( !isMaxCountReached && <button onClick={ () => increaseBy(2) }>+2</button> )*/
+                            }
+
+                            <span>Count: { count }</span>
                         </>
                     )
                 }
