@@ -1,6 +1,6 @@
 import styles from '../styles/styles.module.css';
 import { useProduct } from '../hooks/useProduct';
-import { createContext, ReactElement } from 'react';
+import { createContext } from 'react';
 import { InitialValues, onChangeArgs, Product, ProductContextProps } from '../interfaces/interfaces';
 
 export const ProductContext = createContext({} as ProductContextProps);
@@ -10,7 +10,9 @@ const { Provider } = ProductContext;
 // Aqui definimos todas las propiedades que el componente puede recibir
 export interface Props {
     product: Product
-    children?: ReactElement | ReactElement[]
+    // Aqui configuramos lo que espera el componente que le pasemo internamente (Ahora le ponemos una funcion que nos regres JSX)
+    // children?: ReactElement | ReactElement[]
+    children?: () => React.JSX.Element;
     className?: string
     style?: React.CSSProperties
     onChange?: ( args: onChangeArgs ) => void
@@ -34,7 +36,14 @@ export const ProductCard = ({ children, product, className, style, onChange, val
             className={ `${styles.productCard} ${ className }` }
             style={ style }
         >
-            { children }
+            {/* 
+                React por defecto no puede renderizar funciones, asi que le agregamos los perentesis 
+                La ventaja ahora es que podemos mandar cualquier cantidad y tipo de Argumentos    
+                podemos regresar y exponer tantas cosas como sean nesesarias y dar informacion a cualquiera
+                que use el componente desestructurando lo que nesecite
+                
+            */}
+            { children!() }
         </div>
        </Provider>
     )
