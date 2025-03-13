@@ -28,8 +28,15 @@ export const useProduct = ( { onChange, product, value = 0, initialValues }: use
 
     const increaseBy = ( value: number ) => {
 
-        const newValue = Math.max( counter + value, 0 );
-
+        // Implementar para que si esta definido el maxCount solo llegue hasta ese limite
+        let newValue = Math.max( counter + value, 0 );
+        // Verificamos si existe la propiedad
+        if(initialValues?.maxCount){
+            // Tomamos el minimo de esos dos valores ya que el "newValue" va a estar incrementandose
+            // hasta que llege a valer lo mismo que el "maxCount" mientras regresa el "newValue"
+            newValue = Math.min( newValue, initialValues.maxCount );
+        }
+        
         setCounter( newValue );
         onChange && onChange({ count: newValue, product });
     }
