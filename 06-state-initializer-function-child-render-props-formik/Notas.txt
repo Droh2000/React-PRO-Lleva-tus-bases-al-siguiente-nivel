@@ -1,0 +1,28 @@
+Lo que están apunto de observar en esta sección es el patrón State Initializer 
+junto al diseño de componentes que utiliza Formik.
+
+El principal objetivo es poder exponer todo lo que el usuario (otro desarrollador) 
+puede utilizar, el patrón principalmente pide que se pueda ofrecer un estado inicial 
+y una forma de re-establecer el estado a su forma original, pero nosotros aquí lo 
+llevaremos a otro nivel exponiendo funciones y nuevas propiedades.
+
+También aprenderemos a enviar una función como children, similar a la implementación 
+de Formik.
+
+Formik (Es una manera de trabajar con formularios) donde nos crea un objeto y ahi vamos a tener el acceso
+y control absoluto de todo lo que sucede en el componente, darle al usuario el control de como 
+se renderiza, resets, del estado inicial, poder cambiar el valor que internamente tiene el componente
+que los usuarios que lo usan puedan cambiar en el componente hasta donde nosotros los creadores se los permitamos
+
+Aqui con Formik tenemos ya la propiedad de "initialValues" donde le podemos mandar todos los valores iniciales que queramos
+ademas tiene el "validate" donde le podemos mandar cualquier otra clase de propiedades donde las validamos
+La ventaja desde nuestro proyecto es que si la persona ya tiene el carro de compras nosotros le podemos establecer el valor inicial
+pero ademas tenemos que verificar la cantidad en existencia del inventario (SE hace la validacion en el Fronted mas la validacion en el Backend)
+o limitar para que la persona solo pueda comprar un producto
+Todas estas caracteristicas las podemos establecer gracias a este patron del State Initializer, pero ademas con Formik en ligar de pasarle un hijo
+JSX, se le pasa dentro lo que es una funcion donde le podemos pasar argumento a lo que tengamos dentro de la funcion que puede ser un JSX
+que seria el que se renderiza al final
+
+Lo que vamos a hacer aqui es implementar el patron en el que en lugar de pasarle un hijo le podamos pasar una funcion al componente
+
+Este codigo esta como la primera implementacion de la carpeta anterior 
