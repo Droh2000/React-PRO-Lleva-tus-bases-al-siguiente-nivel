@@ -41,6 +41,12 @@ export const useProduct = ( { onChange, product, value = 0, initialValues }: use
         onChange && onChange({ count: newValue, product });
     }
 
+    // Esta funcion de Reset la espera la funcion Children del "ProductCard"
+    const reset = () => {
+        // Regresamos al estado inicial (Si el value es nulo por defecto le dara el valor por defecto que es 0)
+        setCounter(initialValues?.count || value);
+    }
+
     // Si el componente no ah sido montado entonces no queremos cambiar esto
     useEffect(() => {
         // Solo cuando este montado queremos ejecutar el setCounter
@@ -60,6 +66,10 @@ export const useProduct = ( { onChange, product, value = 0, initialValues }: use
         counter,
         increaseBy,
         // Regresamos este valor para poder bloquear el boton de incremento cuando se llega al maximo
-        maxCount: initialValues?.maxCount
+        maxCount: initialValues?.maxCount,
+        // Esta propiedad se la pasamos a la funcion Children (la sacamos de aqui porque aqui es donde sabemos cuando cambia)
+        // Si el "initialValue" existe entonces evalua si es igual al counter
+        isMaxCountReached: !!initialValues?.count && initialValues.maxCount === counter,
+        reset
     }
 }

@@ -37,11 +37,14 @@ export const ShoppingPage = () => {
                 }}
             >
                 {
-                    () => (
+                    // Des los args podemos desestructurar y tomar lo que nos intereses
+                    ({ reset }) => (
                         <>
                             <ProductCard.Image className="custom-image"/>
                             <ProductCard.Title className="text-bold"/>
                             <ProductCard.Buttons className="custom-buttons"/>
+
+                            <button onClick={ reset }>Reset</button>
                         </>
                     )
                 }

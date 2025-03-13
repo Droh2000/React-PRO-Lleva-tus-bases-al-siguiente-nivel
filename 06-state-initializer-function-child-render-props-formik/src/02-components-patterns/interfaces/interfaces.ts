@@ -1,5 +1,5 @@
 import { JSX, ReactElement } from "react";
-import { Props as ProductCardProps } from "../components/ProductCard";
+import { Props as ProductCardProps, ProductCard } from '../components/ProductCard';
 import { Props as ProductTitleProps } from "../components/ProductTitle";
 import { Props as ProductImageProps } from "../components/ProductImage";
 import { Props as ProductButttonsProps } from "../components/ProductButtons";
@@ -36,4 +36,16 @@ export interface ProductInCart extends Product{
 export interface InitialValues{
     count?: number;
     maxCount?: number;
+}
+
+// Nos definimos una interface de todo lo que va a regresar el children
+export interface ProductCardHandlers {
+    // Aqui definimos todo lo que el componente va a regresar al mundo exterior
+    count: number;
+    isMaxCountReached: boolean;
+    maxCount?: number;
+    product: Product;
+
+    increaseBy: ( value: number ) => void;
+    reset: () => void; // Con esta vamos a resetear el estado de nuestro componente
 }
