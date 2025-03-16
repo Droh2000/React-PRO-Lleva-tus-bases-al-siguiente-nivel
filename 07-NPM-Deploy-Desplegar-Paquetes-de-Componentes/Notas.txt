@@ -1,0 +1,7 @@
+Vamos a tomar todo el componentes que hemos construido y lo vamos a desplegar a NPM
+ya que no tiene sentido crear nuestros componentes personalizados para que el dia de mañana
+solo se use Ctr+C y Ctr+V, adeas que asi tendremos el dia de mañana que queramos actualizar
+el componente
+Aqui vamos a usar la herramiendo de TSDX que ya hace mucho trabajo por nosotros como crear
+los archivos de definicion de TS (Arcivo.d.ts) donde configuramos para que se respete el 
+tipado de dato, autocompletado y manejo de errores
