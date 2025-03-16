@@ -1,6 +1,3 @@
-import * as React from 'react';
-
-// Delete me
-export const Thing = () => {
-  return <div>the snozzberries taste like snozzberries</div>;
-};
+// Aqui ponemos todas las exportaciones que seran vistas desde el mundo esterior
+// Gracias a la logia que teniamos con el archivo barril podemos importar toda la carpeta asi para no tener muchas importaciones
+export * from './components';

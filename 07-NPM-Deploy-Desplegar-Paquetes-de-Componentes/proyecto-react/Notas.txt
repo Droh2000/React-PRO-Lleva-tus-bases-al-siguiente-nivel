@@ -21,3 +21,13 @@ En el package.json colocamos:
 En el SRC es donde vamos a desplegar el componente
 La carpeta "exmple" es un codigo de ejemplo que dejamos para que los usuarios consumidores sepan como se utiliza nuestro componente
 La carpeta "dist" es todo lo que las personas terminaran importando de nuestra aplicacion y consumiendo
+
+De nuestro proyecto de la aplicacion hay que hacer preparaciones y mover lo que nececitamos, ademas hay que preparar el 
+"Index.ts" para cuando hagan una importacion de nuestro paquete facilmente podran tomar lo que neseciten pero a la vez no queremos
+perder la estructura de las carpetas porque asi es como podemos seguir dando mantenimiento asi que movemos todas
+las carpetas al SRC (Despues dejamos solo lo que requerimos)
+
+Despues de hacer los cambios, por el momento no sabemos si todo esta funcionando pero podemos ejectuar el comando de 
+    * yarn start
+Esto nos dara un error "Failed to Compile" ya que estamos importando algo que no es JS en el archivo de ProductCard 
+en la importacion de CSS, tenemos que configurar el proyecto para permitir la importacion de estilos como modulos
