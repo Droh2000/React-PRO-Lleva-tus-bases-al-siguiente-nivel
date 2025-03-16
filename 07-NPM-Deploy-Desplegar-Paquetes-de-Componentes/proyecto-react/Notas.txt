@@ -11,4 +11,13 @@ un despliegue, con este comando creamos todo lo necesario para que sea un paquet
 
     * npx tsdx create Nombre-Paquete
 
-
+En el README colocamos lo que hace nuestro paquete
+En el package.json colocamos: 
+    * version
+    * Los archivos que queremos incluir
+    * "peerDependencies" -> Esto es algo que nuestro paquete requiere de manera implicita que adiferencia 
+        de las "dependencies" normales, estas son las dependencias que los usuarios consumidores tienen 
+        que satisfacer 
+En el SRC es donde vamos a desplegar el componente
+La carpeta "exmple" es un codigo de ejemplo que dejamos para que los usuarios consumidores sepan como se utiliza nuestro componente
+La carpeta "dist" es todo lo que las personas terminaran importando de nuestra aplicacion y consumiendo
