@@ -5,3 +5,10 @@ el componente
 Aqui vamos a usar la herramiendo de TSDX que ya hace mucho trabajo por nosotros como crear
 los archivos de definicion de TS (Arcivo.d.ts) donde configuramos para que se respete el 
 tipado de dato, autocompletado y manejo de errores
+
+Tenemos que crearnos toda una serie de archivos y directorios que nos pide NPM para poder hacer
+un despliegue, con este comando creamos todo lo necesario para que sea un paquete de tipo NPM
+
+    * npx tsdx create Nombre-Paquete
+
+
