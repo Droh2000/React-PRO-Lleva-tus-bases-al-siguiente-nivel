@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext } from "react";
 import { ProductContext } from "./ProductCard";
 import styles from '../styles/styles.module.css';

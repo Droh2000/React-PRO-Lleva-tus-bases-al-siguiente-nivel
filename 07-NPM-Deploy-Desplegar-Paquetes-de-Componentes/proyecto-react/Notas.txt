@@ -29,5 +29,17 @@ las carpetas al SRC (Despues dejamos solo lo que requerimos)
 
 Despues de hacer los cambios, por el momento no sabemos si todo esta funcionando pero podemos ejectuar el comando de 
     * yarn start
-Esto nos dara un error "Failed to Compile" ya que estamos importando algo que no es JS en el archivo de ProductCard 
+Esto nos dara un error "Failed to Compile" ya q ue estamos importando algo que no es JS en el archivo de ProductCard 
 en la importacion de CSS, tenemos que configurar el proyecto para permitir la importacion de estilos como modulos
+
+Si no estamos usando los modulos de CSS no hay necesidad de hacer esta configuracion pero ademas tambien tenemos que hacer esta configuracion
+porque estamos cargando una imagen
+    * Para esto nos creamos el archivo "tsdx.config.js"
+    De aqui seguimos los pasos del PDF en el paso 3
+    Con esto le decimos a TSDX como cargar las imagenes y como cargar los modulos de CSS
+
+    Despues de esto nos creamos el archivo de definicion de TS para indicarle a TS como sean cargados los modulos
+
+    Al final si al ejecutar el comando: yarn start nos da erro, una solucion es que tengamos que agregar el import de React en cada uno de los componentes
+    donde estamos retornando un JSX
+        * Si sale "Compiled Successfully" entonces todo esta OK ya con Ctrl+C cancelamos
