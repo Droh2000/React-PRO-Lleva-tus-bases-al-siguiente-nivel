@@ -43,3 +43,8 @@ porque estamos cargando una imagen
     Al final si al ejecutar el comando: yarn start nos da erro, una solucion es que tengamos que agregar el import de React en cada uno de los componentes
     donde estamos retornando un JSX
         * Si sale "Compiled Successfully" entonces todo esta OK ya con Ctrl+C cancelamos
+
+    Luego ejecutamos el paso 4
+        Esto nos crea la carpeta Dist 
+        Si estubieramos trabajando en TS y solo en JS seria conveniente que definamos los PropsTypes para tener los tipos de las propiedades
+        aunque estemos trabajando en JS
