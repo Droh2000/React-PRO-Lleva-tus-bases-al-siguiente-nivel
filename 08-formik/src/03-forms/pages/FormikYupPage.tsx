@@ -2,12 +2,6 @@ import '../styles/styles.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-interface FormValues {
-    firstName: string,
-    lastName: string,
-    email: string,
-}
-
 export const FormikYupPage = () => {
 
     // Aqui ya eliminamos la funcion validadora
@@ -19,7 +13,7 @@ export const FormikYupPage = () => {
             email: '',
         },
         onSubmit: (values) => {
-
+            console.log(values);
         },
         // Aqui llamamos esta propiedad donde usamos Yup, dentro pasamos los campos del formulario 
         // y le declaramos las regles que queremos aplicarle (Debe de tener los mismo nombres que le pusimos en el initialValues)
@@ -41,13 +35,16 @@ export const FormikYupPage = () => {
             <h1>Formik Yup</h1>
 
             <form onSubmit={ formik.handleSubmit } noValidate>
+                {/* 
+                    Vamos a ahorarnos el tener que poner en todos los campos: onBlur, onChange, Value 
+                    Para esto de formik tenemos el metodo de "getFieldProps" al cual solo le mandamos el nombre
+                    que incluso nos ahorramos el tener que especificar el "name"
+                    Este metodo nos regresa un objeto por eso lo estamos desestructurando
+                */}
                 <label htmlFor="firstName">First Name</label>
                 <input 
-                    type="text" 
-                    name='firstName'
-                    value={ formik.values.firstName }
-                    onChange={ formik.handleChange }
-                    onBlur={ formik.handleBlur }
+                    type="text"
+                    { ...formik.getFieldProps('firstName') }
                 />
                 
                 {  formik.touched.firstName && formik.errors.firstName && <span>{formik.errors.firstName}</span>}
@@ -55,20 +52,14 @@ export const FormikYupPage = () => {
                 <label htmlFor="lastName">Last Name</label>
                 <input 
                     type="text"
-                    name='lastName'
-                    value={ formik.values.lastName }
-                    onChange={ formik.handleChange } 
-                    onBlur={ formik.handleBlur }
+                    { ...formik.getFieldProps('lastName') }
                 />
                 { formik.touched.lastName && formik.errors.lastName && <span>{formik.errors.lastName}</span>}
 
                 <label htmlFor="emailAddress">Email Address</label>
                 <input 
                     type="email"
-                    name='email'
-                    value={ formik.values.firstName }
-                    onChange={ formik.handleChange } 
-                    onBlur={ formik.handleBlur }
+                    { ...formik.getFieldProps('email') }
                 />
                 { formik.touched.email && formik.errors.email && <span>{formik.errors.email}</span>}
                 
