@@ -1,0 +1,5 @@
+Formik
+
+Antes haciamos toda al implementacion de formularios manualmente, el problema es que tenemos que tomar en cuenta muchos
+comportamientos esperados (validaciones, controles, etc) 
+
