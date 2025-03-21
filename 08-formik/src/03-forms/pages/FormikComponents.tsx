@@ -30,6 +30,9 @@ export const FormikComponents = () => {
                     firstName: '',
                     lastName: '',
                     email: '',
+                    // Creamos mas propiedades para ver el uso de otros campos en el formulario
+                    terms: false,
+                    jobType: '',
                 }} 
                 // Aqui samos los Values y otras cosas que nos dan mayor control del formulario
                 onSubmit={ ( values ) => {
@@ -47,6 +50,12 @@ export const FormikComponents = () => {
                         email: Yup.string()
                                 .email('El email no tien un formato valido')
                                 .required(),
+                        terms: Yup.boolean()
+                                  .oneOf([true], 'Debe de aceptar las condiciones'),// Le indicamos que a fuerzas se tiene que activar
+                        jobType: Yup.string()
+                                    .notOneOf(["it-junior"], 'Esta opcion no es permitida')// esto es para que no pueda seleccionar esta opcion que pusimos
+                                    .required('Requerido') // Esto es para obligar a la persona que debe de seleccionar algo
+
                     })
                 }
             >
@@ -86,6 +95,33 @@ export const FormikComponents = () => {
                             type="text"
                         />
                         <ErrorMessage name="email" component="span"/>
+
+                        {/* Esto es un selector */}
+                        <label htmlFor="jobType">Job Type</label>
+                        <Field
+                            name="jobType"
+                            as="select"
+                        >
+                            <option value="">Pick something</option>
+                            <option value="developer">Developer</option>
+                            <option value="designer">Designer</option>
+                            <option value="it-senior">It Senior</option>
+                            <option value="it-junior">It Junior</option>
+                        </Field>
+                        <ErrorMessage name="jobType" component="span"/>
+                        
+                        {/*
+                            Queremos que cuando se haga click en terminos y condiciones se active tambien el checkbox
+                            por eso pusimos el Field dentro del Label
+                        */}
+                        <label>
+                                <Field
+                                    name="terms"
+                                    type="checkbox"
+                                />
+                                Terms and Conditions
+                        </label>
+                        <ErrorMessage name="terms" component="span"/>
                         
                         <button type='submit'>Submit</button>
                     </Form>
