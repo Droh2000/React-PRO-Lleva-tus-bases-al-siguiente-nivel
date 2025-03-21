@@ -8,3 +8,8 @@ Para instalar:
 
 Hay que hacer ciertas configuraciones y hay muchas maneras de trabajar con formik, este tiene verios custom hook, tiene varios componentes
 personalizados 
+
+El problema de nuesto formulario es que esta plagado de logica y eso que solo tenemos unos pocos campos, para ahorrarnos vamos a usar 
+un Validation Schema Builder esto significa que en lugar de que vengamos dentro del componente e implementemos la logica manualmente con muchos
+If/Else, vamos a usar YUP porque es el que recomienda Formik
+    * yarn add yup
