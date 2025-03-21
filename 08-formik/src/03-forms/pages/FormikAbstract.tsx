@@ -2,6 +2,7 @@ import '../styles/styles.css';
 import { Formik ,Field, Form, ErrorMessage, FormikHelpers, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../components/MyTextInput';
+import { MySelect } from '../components/MySelect';
 
 export const FormikAbstract = () => {
 
@@ -73,18 +74,19 @@ export const FormikAbstract = () => {
                             type='email' 
                         />
 
-                        <label htmlFor="jobType">Job Type</label>
-                        <Field
-                            name="jobType"
-                            as="select"
-                        >
+                        {/* Para selector despues de implementado el componente, remplazamos el  "Field" por el componente 
+                            El name tiene que ser igual al especificado en InitialValues
+
+                            Tambien si quisieramos podriamos evitar mandarle internamente los "opcions" y mandarselos como una propiedad
+                            adicional en un arreglo
+                        */}
+                        <MySelect label='Job Type' name='jobType'>
                             <option value="">Pick something</option>
                             <option value="developer">Developer</option>
                             <option value="designer">Designer</option>
                             <option value="it-senior">It Senior</option>
                             <option value="it-junior">It Junior</option>
-                        </Field>
-                        <ErrorMessage name="jobType" component="span"/>
+                        </MySelect>
                         
                         <label>
                                 <Field
