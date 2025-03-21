@@ -3,3 +3,8 @@ Formik
 Antes haciamos toda al implementacion de formularios manualmente, el problema es que tenemos que tomar en cuenta muchos
 comportamientos esperados (validaciones, controles, etc) 
 
+Para instalar:
+    * yarn add formik
+
+Hay que hacer ciertas configuraciones y hay muchas maneras de trabajar con formik, este tiene verios custom hook, tiene varios componentes
+personalizados 

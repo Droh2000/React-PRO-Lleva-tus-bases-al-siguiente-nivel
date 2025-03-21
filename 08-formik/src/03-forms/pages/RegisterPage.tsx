@@ -84,3 +84,8 @@ export const RegisterPage = () => {
         </div>
     )
 }
+/*
+    El useForm no lo terminamos, hay muchas cosas que se pueden implementar y tener el customHook robusto en el cual podemos hacer un
+    paquete de NPM para poder reutilizarlo
+    Para ahorrarnos todo ese trabajo esta Formik
+*/
