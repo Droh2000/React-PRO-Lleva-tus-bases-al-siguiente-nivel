@@ -15,6 +15,8 @@ export const FormikBasicPage = () => {
     const validate = ( values: FormValues ) => {
 
         // Esta funcion tiene que regresar los errores, este objeto debe de tener algun formato porque lo tiene que interpretar Formik
+        // Cada vez que se hace la validacion el objeto deerrores estan vacios y conforme suceden (Cada vez que precionamos una tecla 
+        // se vuelve a disparar todo esto) puede que no existan los nombre de los campos que contengan los errores porque ese campo si cumplio
         const errors: FormikErrors<FormValues> = {};
 
         // Si el campo no existe
@@ -70,9 +72,22 @@ export const FormikBasicPage = () => {
                     name='firstName' // Es importante que el valor de "name" sea igual a los que pasamos en initialValues
                     value={ formik.values.firstName } // Le establecemos los valores que sea escritos
                     onChange={ formik.handleChange } // Esto es como lo haciamos antes que nos creabamos una funcion aparte e implementabamos toda la logica
+                    onBlur={ formik.handleBlur }//Para funcione el "formik.touched" tenemos que disparar los eventos del foco (y le pasamos una funcion que ya viene en fomik)
                 />
-                {/* Aqui vamos a tener las mismas validaciones */}
-                <span>Fist names is required</span>
+                {/* 
+                    Aqui vamos a tener las mismas validaciones
+                    Debemos de mostrar los mensajes de error solo cuando el campo no cumple con los requisitos
+                    ya que ahorita se estan mostrando todos por defecto, en si debemos de mostrar de manera condicional
+                    los SPAN y los mensajes de error ya estan definnidos en el objeto "errors" (Del objeto Formik sacamos esos errores)
+                    Como el valor del nombre del campo (En este caso "firstName" puede que no exista, pero si existe significa que tenemos un error)
+                    (El mensaje del error lo devemos de meter denro del SPAN)
+
+                    Despues de la implementacion ocurria que al escribir en un campo se activaban las demas validaciones en los otros campos y nos marcaba error
+                    luego al entrar con el cursor en un campo y salir no se activaba la validacion sino que hasta escribiamos algo
+                    Esto es porque al inicio solo esta difinida nuestra constatne "validate" y cuando precionamos una tecla es cuando se disparan las validaciones
+                    Como nos interesa que solo los errores salgan si el campo a sido tocado (Esta opcion la podemos sacar del objeto del useFormik)
+                */}
+                {  formik.touched.firstName && formik.errors.firstName && <span>{formik.errors.firstName}</span>}
 
                 <label htmlFor="lastName">Last Name</label>
                 <input 
@@ -80,8 +95,9 @@ export const FormikBasicPage = () => {
                     name='lastName'
                     value={ formik.values.lastName }
                     onChange={ formik.handleChange } 
+                    onBlur={ formik.handleBlur }
                 />
-                <span>Last name is required</span>
+                { formik.touched.lastName && formik.errors.lastName && <span>{formik.errors.lastName}</span>}
 
                 <label htmlFor="emailAddress">Email Address</label>
                 <input 
@@ -89,10 +105,10 @@ export const FormikBasicPage = () => {
                     name='email'
                     value={ formik.values.firstName }
                     onChange={ formik.handleChange } 
+                    onBlur={ formik.handleBlur }
                 />
-                <span>Email Address is required</span>
-                <span>Check for an valid email format</span>
-
+                { formik.touched.email && formik.errors.email && <span>{formik.errors.email}</span>}
+                
                 <button type='submit'>Submit</button>
 
             </form>
