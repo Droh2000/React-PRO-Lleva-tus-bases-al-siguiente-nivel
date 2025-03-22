@@ -1,4 +1,4 @@
-import { useField } from "formik"
+import { ErrorMessage, useField } from "formik"
 
 // Esto es para el Selector de opciones en el HTML
 
@@ -23,10 +23,11 @@ export const MySelect = ( { label, ...props }: Props ) => {
             */}
             <select { ...field } { ...props }/>
             {
-                meta.touched && meta.error && (
+                /*meta.touched && meta.error && (
                     <span className="error">{ meta.error }</span>
-                )
+                )*/
             }
+            <ErrorMessage name={props.name} component="span"/>
             
         </>
     )

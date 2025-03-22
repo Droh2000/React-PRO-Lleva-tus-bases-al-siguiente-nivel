@@ -1,9 +1,8 @@
 import '../styles/styles.css';
 import { Formik ,Form } from 'formik';
 import * as Yup from 'yup';
-import { MyTextInput } from '../components/MyTextInput';
-import { MySelect } from '../components/MySelect';
-import { MyCheckbox } from '../components/MyCheckbox';
+
+import { MyCheckbox, MySelect, MyTextInput } from '../components';
 
 export const FormikAbstract = () => {
 

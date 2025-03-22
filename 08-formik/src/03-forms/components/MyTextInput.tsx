@@ -1,4 +1,4 @@
-import { useField } from "formik"
+import { ErrorMessage, useField } from "formik"
 
 // Tenemos que saber como se ve la informacion que ingresa a este componente, de aqui le queremos mandar
 // los elementos a reutilizar que son "label", "field", "ErrorMessage"
@@ -36,10 +36,16 @@ export const MyTextInput = ( { label, ...props }: Props ) => {
             {
                 // Si ah sido tocado y hay errores entonces mostramos el mensaje del error en el Span
                 // Tambien podemos aprovechar para agregar estilos
-                meta.touched && meta.error && (
+                /*meta.touched && meta.error && (
                     <span className="error">{ meta.error }</span>
-                )
+                )*/
+
+                // Se comento para usar el coponente propio de los mensajes de Error
+                // Le pasamos el nombre del campo que queremos controlar
+                // Le especificamos el elemnto HTML donde nos mostrara el texto
+                // Tambien le podemos especificar una clase CSS con className y con Meta podemos sacer el error para aplicar un estilo respectivo
             }
+            <ErrorMessage name={props.name} component="span"/>
             
         </>
     )
