@@ -1,0 +1,22 @@
+Fomularios dinamicos
+
+Esto es cuando tenemos en el backend la definicion del formulario que se manda
+al forontend, pero esa definicion seria un archivo JSON el cual recibe nuestra app
+y ahi se crea el formulario basado en las propiedades de ese archivo JSON
+(En el backend es como se decide los datos que se van a pedir y por tanto los campos que usara)
+Pero tambien hay que mandarle desde el archivo JSON las validaciones, al final cuando todas
+las validaciones pasan, el formulario tiene permitido el envio de datos
+
+Esta sección tomaremos el conocimiento aprendido sobre Formik y crearemos formularios dinámicos
+basados en data en formato JSON. Aquí aprenderemos:
+
+Construir inputs de forma dinámica
+
+Construir validaciones basados en propiedades
+
+Selects, Inputs
+
+Ideas para validaciones
+
+Es una sección corta, pero bastante solicitada, el objetivo principal de la misma es que tengamos 
+la idea de formularios dinámicos y que logremos adaptarlo a nuestras necesidades particulares.
