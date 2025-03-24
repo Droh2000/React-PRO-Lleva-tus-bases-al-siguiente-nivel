@@ -1,0 +1,10 @@
+[
+    // Este es el primero componente que tenemos que generar (Cada uno esta separador por la llaves)
+    {
+        "type": "input", // Tipo de elemento del formulario
+        "name": "firstName",// Nombre que va a tener el campo
+        "placeholder": "Name Person",
+        "label": "First Name",
+        "value": "" // Aqui podria ser que del lado del backend ya venga previamente cargado
+    }
+]
