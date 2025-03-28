@@ -1,0 +1,85 @@
+Como funciona la aplicacion
+    Los usuarios se autentica por medio de JWT
+    En el Navegador donde vemos la consola pero en la pestaña de "Application" en Storage->Local Storage
+    Ahi veremos como se almacena el Token, cada vez que recargamos el navegador esta cambiando
+    el Key "token-init-date", esto pasa porque tenemos el backend cada vez que la aplicacion se recarga se hace
+    una verificacion para confirmar si el JWT sigue siendo valido (La vigencia del JWT lo configuramos en el archivo
+    helpers/jwt.js de la carpeta backend)
+
+    Todos los usuarios que inicien sesion estan compartiendo el mismo calendario
+    La aplicacion hace un CRUD estandar pero tambien trabaja en REDUX
+
+    Con JWT tenemos una autenticacion pasiva que nos va a permitir realizar postes Offline
+    Al convertirla en una aplicacion PWA vamos a poder hacer que si no hay conexion se puedan realizar
+    posteos donde a apenas tengamos conexion se envien al servidor los datos
+    Ademas que con una PWA mantenemos las funcionalidades de la pagina (Lo que si no se puede mantener es el Registro/Login)
+
+PWA (Aplicacion Web Progresiva)
+    Lo que una aplicacion sea PWA es cuando tiene el archivo Service Worker el cual implementa ciertas configuraciones dependiendo de nuestras nesecidades
+    Entre las configuraciones que podemos hacer son:
+        * Acceso a la aplicacion sin conexion
+        * Creacion de base de datos local
+        * Push Notifications
+        * Uso de recursos nativos como la camapa y GPS
+        * Sincronizacion en segundo plano
+        * Entre otras cosas
+    
+    Como funciona
+        Tenemos nuestra App que se comunica al Backend con HTTP, cuando falla la conexion a internet se corta toda comunicacion con el backend
+        pero se mantiene el fronted (Aunque no pueda hacer nada) a solo que el usuario actualize la pagina, ahi si se pierde todo pero con la PWA
+        mantendremos el fronted y se pueda hacer posteos
+
+        Ahora cuando ingresamos por primera vez a un sitio Web se hace la primera peticion que es del cliente tratando de solicitar por el URL
+        al servidor y el servidor le manda la primera respuesta que seria la aplicacion de la pagina
+        En esta primera respuesta tambien viene algo especial llamado el service worker, este archivo despues de la primera respuesta
+        va a transformar la forma en la que la aplicacion hace las peticiones e interactua con el backend, asi de ahora en adelante cuando nuestra App
+        se quiera comunicar con el servidor, es al ServiceWorker al que primero le habla y el ServiceWorker es el que se comunica con el backend
+
+        El Service Worker funciona como un proxy de fondo, este no corre en el mismo plano de la App, lo hace en otro, entre las cosas que puede hacer
+        son:
+            * Interceptar peticiones
+            * Esta pendiente de Notificaciones Push
+            * Corre en segundo plano
+            * Maneja el Cache
+
+        Caracteristicas importantes si queremos transformar nuestra APP en una PWA
+            * Servicio de protocolo HTTPS (Si tenemos certificado HTTP en la pagina no se podra implementar)
+            * Funciona localmente "Localhost:Puerto"
+            * No funiciona en desarrollo "yarn start"
+        
+        Esto funciona mejor mediante Tokens
+
+    Por la forma en la que se crean las aplicaciones de React, si al inicio no elegimos la opcion para crear el Service Worker
+    en ese caso se crea una nueva aplicacion de React, tomamos el Service worker en un archivo de configuracion que se genera
+    y lo movemos a una aplicacion de react que ya esta previamente creada
+
+    Al inicio vamos a crear todo manual para entender las diferentes estrategias del Cache
+
+Creamos la aplicacion de produccion con:
+    * yarn build
+Esto nos generara la carpeta que subimos al servidor para que la pagina sea usada en produccion
+Nosotros no vamos a crear un ServiceWorker directamente en la carpeta SRC porque cada vez que ejecutemos el Build de la aplicacion
+se debe de generar nuevamente el Service Worker ya que los archivos del proyecto pueden cambiar
+Por ejemplo si nos vamos a la carpeta de "fronted/build/static/js" veremos que los archivos tienen en el nombre cierto codigo de numeros
+esto es un HASH que REACT nos crea para evitar que los navegadores web mantengan el cache de nuestra aplicacion, supongamos que estamos desarrollando
+nuestra aplicacion y hacemos un cambio muy pequeno (Que si no subimos las actualizaciones al servidor no funciona) si no cambiamos el HASH ni el
+nombre del archivo para el navegador web seria el mismo archivo anterior porque seria un cambio minusculo que no notaria, asi que el navegador 
+usaria los archivos que ya tiene almacenados en la memoria para no hacer la peticion al servidor, Por eso se le pone ese HASH para que en cada nueva peticion
+el servidor sepa que el archivo cambio
+(El cache se resumiria a almacenar todos estos archivos en el disco duro del cliente) cuando almacenamos los datos ahi, tenemos colocar y especificar ese HAsh
+se puede hacer manualmente pero hay varias tecnicas para que automaticamente se almacene esto en cache (Varias formas de crear Service Worker)
+
+Si hacemos un "yarn start" estariamos leventando el wepack dev server (WDS) aqui no funciona el service worker entonces tenemos que desplegar la aplicacion para 
+el build de produccion, asi que cada vez que ocurra un cambio en la aplicacion de React vamos a tener que ejecutar el "yarn build" para volver a generar los archivos
+y a su vez tambien seria bueno que podamos generar de nuevo el ServiceWorker
+La implementacion del Service Worker usualmente se hace cuando ya tenemos la aplicacion creada y lista, ademas que siempre que se hace una actualizacion importante
+de la aplicacion es cuando se vuelve a generar, asi que tenemos que hacer lo siguiente:
+    * Ejecutar el comando en una terminal ejecutada como administrador:
+        - yarn global add serve
+    * Dentro de la carpeta de fronted Ejecutamos:  
+        - serve -s build
+    De ahi podemos entrar a la direccion de localhost que nos da, esta no es nuestra aplicacion como la ejecutabamos normalmente como antes sino que 
+    con el comando "serve -s build" ejecutamos el proyecto que se nos genero en la carpeta de "build" que es la de produccion
+
+
+
