@@ -12,5 +12,12 @@
         "placeholder": "LastName Person",
         "label": "Last Name",
         "value": ""
+    },
+    {
+        "type": "email",
+        "name": "email",
+        "placeholder": "Email",
+        "label": "Email",
+        "value": ""
     }
 ]

@@ -9,17 +9,26 @@ import { MyTextInput } from '../components';
 import formJson from '../data/custom-form.json';
 import { Form, Formik } from 'formik';
 
+// Para no nos de el error que tenemos hasta el momento tenemos que crearnos el InitianValues
+// El tipo de dato es una llave y como los campos pueden ser muy variados pueden ser cualquier valor
+const initialValues: { [key: string]: any } = {};
+
+// Vamos a llenar los datos del "inintialValues" con el archivo JSON
+// El "input" del for es cada uno de los elementos del JSON (Lo podriamos desestructurar)
+for(const input of formJson){
+    // Creamos la propiedad al objeto que apunta al "value" porque puede ser que alguien nos establesca el valor inicial en el JSON
+    initialValues[ input.name ] = input.value;
+}
+
 export const DynamicForm = () => {
     return (
         <div>
             <h1>Dynamic Form</h1>
 
             <Formik
-                initialValues={{
-
-                }}
+                initialValues={ initialValues }
                 onSubmit={(values) => {
-
+                    console.log(values);
                 }}
             >
                 {/* Despues de la funcion de flecha abrimos y cerramos parentesis porque queremos regresar automaticamente un objeto 
