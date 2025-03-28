@@ -39,6 +39,17 @@ for(const input of formJson){
             // El mensaje igual lo podemos poner desde el backend
             schema = schema.required('Este campo es requerido');
         }
+        if( rule.type === 'minLenght' ){
+            // Aqui tendriamos que manejar un tipado porque por defecto al poner el objeto "rule" dentro de "min"
+            // nos dice que no existe entonces tenemos que ponerlo como "rule as any" y la propiedad a llamar
+            // Ademas si no existe la relga que por defecto sea 1 
+            schema = schema.min( (rule as any).value || 1, `Minimo de ${(rule as any).value || 1} de caracteres`);
+        }
+
+        if( rule.type === 'email' ){
+            schema = schema.email('El email no tiene un formato valido');
+        }
+
         // ... Aqui irian otras reglas
     }
 
