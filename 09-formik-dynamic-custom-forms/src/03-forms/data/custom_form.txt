@@ -5,7 +5,14 @@
         "name": "firstName",// Nombre que va a tener el campo
         "placeholder": "Name Person",
         "label": "First Name",
-        "value": "" // Aqui podria ser que del lado del backend ya venga previamente cargado
+        "value": "", // Aqui podria ser que del lado del backend ya venga previamente cargado
+        // Agregar las validaciones que son un arreglo porque puede que tengamos muchas
+        // A cualquier campo que le agregemos esto sera requerido
+        "validations": [
+            {
+                "type": "required"
+            }
+        ]
     },
     {
         "type": "select",// Esto es opcional pero se nos indica que se quiere crear ese tipo

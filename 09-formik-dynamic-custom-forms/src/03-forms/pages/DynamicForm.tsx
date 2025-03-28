@@ -8,17 +8,48 @@
 import { MySelect, MyTextInput } from '../components';
 import formJson from '../data/custom-form.json';
 import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 // Para no nos de el error que tenemos hasta el momento tenemos que crearnos el InitianValues
 // El tipo de dato es una llave y como los campos pueden ser muy variados pueden ser cualquier valor
 const initialValues: { [key: string]: any } = {};
+
+// Para las validaciones basicamente nos tenemos que crear todo el objeto del "validationSchema" que vimos en el "FormikYupPage"
+// Vamos a recorrer todos los campos y extraer los que tengan validacioens
+const requiredFields: { [key: string]: any } = {};
 
 // Vamos a llenar los datos del "inintialValues" con el archivo JSON
 // El "input" del for es cada uno de los elementos del JSON (Lo podriamos desestructurar)
 for(const input of formJson){
     // Creamos la propiedad al objeto que apunta al "value" porque puede ser que alguien nos establesca el valor inicial en el JSON
     initialValues[ input.name ] = input.value;
+
+    // Creamos el objeto de las validaciones
+    // Primero verificamos que si ese objeto no existe encontes que continue con el ciclo pero ignore las lineas de abajo
+    if( !input.validations ) continue;
+
+    // CReamos el esquema de validaciones que en este punto es como crearnos el objeto vacio al que despues le agregaremos las validaciones que queramos
+    let schema = Yup.string();
+
+    // Como este objeto de validaciones puede ser otro arreglo con muchas validaciones entonces ponemos otro bucle
+    for (const rule of input.validations) {
+        // Si esto es True nos tenemos que crear una regla de validacion en este punto
+        if( rule.type === 'required' ){
+            // Como aqui podra entrar varias veses la igualacion es a lo que se tenia antes en el "schema" con el mensaje 
+            // El mensaje igual lo podemos poner desde el backend
+            schema = schema.required('Este campo es requerido');
+        }
+        // ... Aqui irian otras reglas
+    }
+
+    // Despues de recorrer todas las reglas de validacion
+    // Creamos el objeto como en el "initialValues" dandole el eschema que requiere validar
+    requiredFields[input.name] = schema;
 }
+
+// Para hacer la conexion con el "validationSchema" del HTML, Aqui es donde creamos el objeto 
+// al que le pasamos todas nuestras validaciones
+const validationSchema = Yup.object({ ...requiredFields });
 
 export const DynamicForm = () => {
     return (
@@ -27,6 +58,7 @@ export const DynamicForm = () => {
 
             <Formik
                 initialValues={ initialValues }
+                validationSchema={validationSchema}
                 onSubmit={(values) => {
                     console.log(values);
                 }}
