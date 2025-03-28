@@ -19,5 +19,25 @@
         "placeholder": "Email",
         "label": "Email",
         "value": ""
+    },
+    {
+        "type": "select",
+        "name": "favorite",
+        "label": "Favorite",
+        "value": "",
+        "options": [
+            {
+                "id": 1,
+                "lable": "Super Smash"
+            }, 
+            {
+                "id": 2,
+                "lable": "Metal Gear"
+            }, 
+            {
+                "id": 3,
+                "lable": "Resident Evil"
+            }
+        ]
     }
 ]

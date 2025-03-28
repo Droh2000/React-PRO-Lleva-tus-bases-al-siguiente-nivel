@@ -6,5 +6,14 @@
         "placeholder": "Name Person",
         "label": "First Name",
         "value": "" // Aqui podria ser que del lado del backend ya venga previamente cargado
+    },
+    {
+        "type": "select",// Esto es opcional pero se nos indica que se quiere crear ese tipo
+        // Por consecuencia debe de tener otras opciones de lo que quiere renderizar en el HTML
+        "name": "favorite",
+        "label": "Favorite",
+        "value": "",
+        // Estas opciones quedan a nuestra eleccion como queremos que estan configuradas
+        "options": ["Super Smash", "Metal Gear", "Resident Evil"]
     }
 ]
