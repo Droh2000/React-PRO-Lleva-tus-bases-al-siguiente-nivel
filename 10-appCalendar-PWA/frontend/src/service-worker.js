@@ -77,12 +77,34 @@ self.addEventListener('message', (event) => {
 // self -> Hace referencia al ServiceWorker como tal
 // addEventListener -> Es para agregar un evento, esto lo se ejecutara cuando se haga la instalacion
 // Cuando estamos en el proceso de instalacion queremos dispara el Callback que declaramos
-self.addEventListener( 'install', (evento) => {
+self.addEventListener( 'install', async (evento) => {
   // Este mensaje solo veremos la primera que entremos a la pagina, si recargamos de ahi en adelante no volveremos a ver el mensaje
   // Porque el navegador detecta que el Service Worker es el mismo, no hubo cambios (Sigue teniendo el contro el Service Worker anterior)
   // Para que el nuevo Service Worker tome el control en la parte de Application-En la opcion del Service Worker tendremos para precionar
   // la opcion del SkipWaitting, con este detenemos el SW anterior y entra el nuevo (El cual tiene este mensaje que pusimos)
   console.log('Instalando');
+
+  // En este evento de Instalacion lo que se hace es que automaticamente se descarge en el cache recursos estaticos del Sitio Web y no solo 
+  // se puede con los archivos que tenemso dentro de la carpeta build sino que podemos cargar cualquier otro recurso
+  // Podemos hacer referencia al espacio del disco duro del cliente, que seria la parte del "Cache" en el menu de Application, donde nos podemos crear
+  // varios caches (Con esta funcion "Open" podemos regresar el espacio en memoria del nombre del cache que especifiquemos), la idea de pasarle aqui el nombre
+  // es que los podemos agrupar como nosotros requieramos (Como esto es una promesa, agregamos esta funcion como Async)
+  const cache = await caches.open('cache-1'); // Este es nuestro espacio para poder gaurdar informacion
+  
+  // Estos son los datos que queremos guardar, dentro dle arreglo le definimos las URLs que podemos guardar en el cache (Esto tambien es una promesa)
+  // El uso del Await es para asegurarnos a que se termine de ejecutar la tarea y se tenga completada la informacion
+  await cache.addAll([
+    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css',
+    // Tambien podemos poner rutas relativas donde tengamos archivos que queramos almacenar
+    '/favicon.ico'
+  ]);
+  // Aqui solo estamos guardando en Cache, no estamos leyendo nada, es decir en el proces de instalacion del SW, va a realizar estas descargar del Arreglo
+  // va a colocar los archivos en el cache que le estamos especificando (Despues de estos cambios tenemos que ejecutar los dos comando y precionar el SkipWitting)
+  // Despues de esto tendremos en la parte del Cache nuestro "cache-1" donde tendremos los archivos que especificamos
+  // En esta parte colocamos todos los recursos que nuestra aplicacion requiere para funcionar
+
+
 });
 // Despues de cada modificacion tenemos que ejecutar el comando del "yarn build"
 // y cuando termine ejecutamos el "serve -s build"

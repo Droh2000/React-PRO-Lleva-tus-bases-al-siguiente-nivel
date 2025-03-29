@@ -143,7 +143,5 @@ Service Worker con NPX
         lo que pasa es que se hace la instalacion, se hacen las actualizaciones pertinentes, se hacen las nuevas descargas si hay recursos nuevos, luego pasa a la fase de espera en la que se deje de usar la 
         aplicacion y se cierre el navegador web para que el nuevo service work entre en accion cuando alguien nuevamente intente entrar al sitio web
         La parte de la espera es donde en este caso esto el SKIP_WAITING, el problema es que el service worker exitenten puede todavia estar realizando proceso y asi esperamos a que termine de hacer sus tareas
-        
-
-
-        
+    
+    
