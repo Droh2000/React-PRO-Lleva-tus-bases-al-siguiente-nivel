@@ -81,5 +81,24 @@ de la aplicacion es cuando se vuelve a generar, asi que tenemos que hacer lo sig
     De ahi podemos entrar a la direccion de localhost que nos da, esta no es nuestra aplicacion como la ejecutabamos normalmente como antes sino que 
     con el comando "serve -s build" ejecutamos el proyecto que se nos genero en la carpeta de "build" que es la de produccion
 
+Service Worker con NPX
 
+    Como esta aplicacion esta creada en NPX y como esta aplicacion esta creada en JS ejecutamos el siguiente comando
+        - npx create-react-app my-app --template cra-template-pwa
+    
+    Como la mayoria de los casos vamos a crear nuestra aplicacion y luego al final implementar el PWA, con el comando de arriba
+    nos genera los archivos en otra carpeta donde estara el ServiceWorker, la idea es que solo movamos los archivos que se nos generan
+    a nuestro proyecto
 
+    Despues de ejecutado el comando veremos la carpeta de "my-app" donde tendremos dentro de la carpeta SRC el Service Worker, copiamos
+    dos archivos "service-worker y serviceWorkerRegistration" al SRC de nuestra app, luego en el package.json de "my-app" y copiamos todas
+    las lineas relacionadas a "workbox" y las pegamos en el package.json de nuestra APP del fronted y para instalar ejecutamos el comando "yarn"
+
+    Al final podemos generar el Service Worker con: 
+        * yarn build
+    Esto nos generar en nuestra carpta "build" el ServiceWorker y podemos ejecutar el 
+        * serve -s build
+    para ejectuar nuestro proyecto ya con el service worker
+
+    Ahora para verifica que si se esta ejecutando con el Service Worker, abrimos la consla en el navegador, nos vamos a la pestana de "Application"
+    y en las opciones del menu tendremos la de "Service Worker" con el mensaje de "activated and is running"
