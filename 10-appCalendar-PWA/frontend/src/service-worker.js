@@ -72,3 +72,17 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+// Vamos a implementar la logica aqui arriba sin WORKBOX, usando toda la configuracion manual de la PWA
+// self -> Hace referencia al ServiceWorker como tal
+// addEventListener -> Es para agregar un evento, esto lo se ejecutara cuando se haga la instalacion
+// Cuando estamos en el proceso de instalacion queremos dispara el Callback que declaramos
+self.addEventListener( 'install', (evento) => {
+  // Este mensaje solo veremos la primera que entremos a la pagina, si recargamos de ahi en adelante no volveremos a ver el mensaje
+  // Porque el navegador detecta que el Service Worker es el mismo, no hubo cambios (Sigue teniendo el contro el Service Worker anterior)
+  // Para que el nuevo Service Worker tome el control en la parte de Application-En la opcion del Service Worker tendremos para precionar
+  // la opcion del SkipWaitting, con este detenemos el SW anterior y entra el nuevo (El cual tiene este mensaje que pusimos)
+  console.log('Instalando');
+});
+// Despues de cada modificacion tenemos que ejecutar el comando del "yarn build"
+// y cuando termine ejecutamos el "serve -s build"

@@ -121,7 +121,29 @@ Service Worker con NPX
         Apesar que miremos el mensaje de Espere..., la aplicacion de React esta funcionando, lo que pasa es que por la logica de nuestra App, el mensaje no se quitara
         hasta que tenga una peticion del servidor
 
-        Aqui tenemos un problema, que podmemos hacer nosotros si el endpoint que revisa el JWT que tenemos en el Cache no se esta logrando resolver
-        porque no tenemos conexion a internet, esto lo solucionaremos mas adelante
         Todo lo que tenemos en el archivo de "service-worker.js" esta siendo implementado mediante Service Workers en la parte de Workbox (Esta es una tecnologia que nos permite
         generar configuraciones estandars y personalizadas de Services Worker)
+
+        Aqui tenemos un problema, que podmemos hacer nosotros si el endpoint que revisa el JWT que tenemos en el Cache no se esta logrando resolver
+        porque no tenemos conexion a internet, para solucionar esto hay que comprender la parte del ciclo de vida de la PWA
+
+            Cuando alguien ingresa por primera vez a nuestra pagina y por lo tanto no tiene nada en cache, no tiene service worker, entonces cuando se recibe el request se hace el 
+            proceso de instalacion y automaticamente pasa el proceso de activacion (Son dos ciclos, la instalacion es la descargar del service worker, hay un punto dentro del service
+            worker donde se hacen instalaciones y descargas dentro del cache que seria el disco duro del cliente) y una vez esta activa, ya nuestro Service Worker es nuestro Proxy
+            es decir nuestra aplicacion puede comunicarse al backend pero pasa por el Service Worker 
+
+        Tenemos varias funcionalidades, una es la parte del "fetch" donde tenemos el control absoluto de cualquier peticion que se realize (El nobre "fetch" no tiene nada que ver con la tecnologia
+        que consume la API, esto no quiere decir que es FetchAPI), de aqui podemos tomar la URL y obtener diferentes fragmentos de ella
+        Ademas si instalamos el Service Worker en la ruta:  
+            * //example.com/foo/ -> Significa que el Service Worker va a tener todo el control de la paginas depues del ultimo Slash
+        Si instalamos el Service worker directamente en la ruta Raiz entonces tendra el control de todo lo que la aplicacion tenga
+        usualmente vamos a querer instalar el SW en el mismo nivel que tengamos nuestra aplicacion de React
+
+        Cuando el usuario ya tiene un service worker existente, si el usuario hace un request nuevo que hace una nueva solicitud de un service worker, el service worker no es el que inmediatamente se activa
+        lo que pasa es que se hace la instalacion, se hacen las actualizaciones pertinentes, se hacen las nuevas descargas si hay recursos nuevos, luego pasa a la fase de espera en la que se deje de usar la 
+        aplicacion y se cierre el navegador web para que el nuevo service work entre en accion cuando alguien nuevamente intente entrar al sitio web
+        La parte de la espera es donde en este caso esto el SKIP_WAITING, el problema es que el service worker exitenten puede todavia estar realizando proceso y asi esperamos a que termine de hacer sus tareas
+        
+
+
+        
