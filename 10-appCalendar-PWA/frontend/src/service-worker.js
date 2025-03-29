@@ -25,6 +25,8 @@ precacheAndRoute(self.__WB_MANIFEST);
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
+// En seta parte se esta haciendo la verificacion del URL de la request que se esta solicitando y preguntar el modo, la URL
+// Esto tiene diferentes estrategias y las veremos a mas a detalle cuando implementemos el PWA de manera manual
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
   ({ request, url }) => {

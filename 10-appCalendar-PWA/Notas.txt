@@ -102,3 +102,26 @@ Service Worker con NPX
 
     Ahora para verifica que si se esta ejecutando con el Service Worker, abrimos la consla en el navegador, nos vamos a la pestana de "Application"
     y en las opciones del menu tendremos la de "Service Worker" con el mensaje de "activated and is running"
+
+    ¿Que esta sucediendo con la configuracion por defecto?
+
+        Dentro de la pestana de Application tenemos en la parte del Cache en el "Cache Storage" aqui tenemos dos archivos
+            - workbox-precache-v2-http...
+                Aqui la version puede variar, el numero depende de la cantidad de instalaciones que hacemos en el Service worker
+                en esta parte estan los archivos de nuestra aplicacion (Estos estan fisicamente en el disco del cliente), son los archivos de la carpeta build
+            - images - http://localhost...
+        Estos archivos se generaron porque se hizo una peticion al backend, el backend nos trae nuevo service worker, esto hace que se actualize el que tenga
+        el cliente y es cuando se nos generan estos archivos
+
+        Ademas en la configurscion por defecto en el archivo "service-worker.js" tenemos el "SKIP_WAITING" porque se salta una parte del
+        ciclo de vida importante del Service Worker el cual es para instalaciones
+
+        Si dentro de la pestana de Application nos vamos la parte del Service Worker y seleccionamos "offline", ahora pasa que no vemos el mensaje
+        en el navegador que se fue la conexion, vemos que mantenemos la fuente del Boostrap y otras librerias que tengamos
+        Apesar que miremos el mensaje de Espere..., la aplicacion de React esta funcionando, lo que pasa es que por la logica de nuestra App, el mensaje no se quitara
+        hasta que tenga una peticion del servidor
+
+        Aqui tenemos un problema, que podmemos hacer nosotros si el endpoint que revisa el JWT que tenemos en el Cache no se esta logrando resolver
+        porque no tenemos conexion a internet, esto lo solucionaremos mas adelante
+        Todo lo que tenemos en el archivo de "service-worker.js" esta siendo implementado mediante Service Workers en la parte de Workbox (Esta es una tecnologia que nos permite
+        generar configuraciones estandars y personalizadas de Services Worker)
