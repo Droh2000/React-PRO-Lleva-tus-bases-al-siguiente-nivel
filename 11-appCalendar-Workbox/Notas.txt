@@ -46,3 +46,8 @@ Despues de esto ejecutamos el comando del "serve -s build", para que se active p
 Para verificar que toma las nueva configuracion si nos vamos al arcihvo de "sw.js" en la carpeta de "build" veremos que el codigo es mas sencillo
 Ahora tenemos el control absoluto del SW y podemos implementar diferentes tecnicas que estan en la documentacion de Workbox sin importar si estamos en una aplicacion de React, Angular o lo que sea
 Por ultimo configuramos el comando en el "package.json" para que se ejecute automaticamente para que cuando se haga el Build automaticamente ejecute ese comando
+
+Despues de los cambios implementados en el archivo de "sw-template.js" y la ejecucion de los comandos, si nos vamos a la pestana de Application en la parte del Cache, del Cache Storage tenemos ahora dos
+que son el precache-v2 y el workbox-runtime donde tenemos el Boostrap almacenado y nos vamos a la pestana de Network vemos que fue servido del ServiceWorker, hay varias tecnicas que podemos emplear como guardarlo
+en un cache especial, plugins para indicar el tiempo en el que va a vivir los datos, esto seria por ejemplo para el JWT que solo tiene cierto tiempo de vida entonces si sacamos ese tiempo
+no tiene sentido seguir almacenando ese Token si ya expiro
