@@ -17,12 +17,28 @@ const { CacheFirst, NetworkFirst, NetworkOnly } = workbox.strategies;
 
 const { BackgroundSyncPlugin } = workbox.backgroundSync;
 
+// Forma optimizada de las lineas de codigo de abajo (Asi tenemos centralizadas las peticiones)
+const cacheFirstNetwork = [
+    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css'
+]
+
+registerRoute(
+    ({ request, url }) => {
+        // Aqui no usamos el pathname ya que si vemos por consola para este caso, esta propiedad viene el contenido con alfo de AJAX
+        // tenemos mas propiedades que podemos manejar para detectar la misma URL en este caso es el href
+        if( cacheFirstNetwork.includes( url.href ) ) return true;
+        return false;
+    },
+    new CacheFirst()
+)
+
 // Ahora no tenemos que emplear el self.addEventlistener(... | Igual si quisieramos podriamos implementar todo esto en este archivo
 // La idea es que con workbox solo llamemos estas mismas funcion
 // Si nos vamos a la pestana de Network para los elementos del Bootstrap y fontAwesome los esta obteniendo del Disk Cache y no del Service Worker
 // Estos deberian de estar en el Cache en el momento de la instalacion
 // Hay varias formas pero en este caso estamos llamando con esta funcion una ruta la cual ejecuta el codigo que le especifiquemos cuando sea llamada y pase por el SW
-registerRoute(
+/*registerRoute(
     // Requerimos el URL de lo que queremos aplicarle el Cache
     // Cuando venga una ruta que cumpla esa condicion
     new RegExp('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'),
@@ -35,13 +51,37 @@ registerRoute(
 registerRoute(
     new RegExp('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css'),
     new CacheFirst()
+)*/
+
+// Estos son los endpoints que queremos manejar
+const cacheNetworkFirst = [
+    '/api/auth/renew',
+    '/api/events',
+];
+
+registerRoute(
+    // Tambien podemos mandar un callback (Si regresa true va a aplicar el codigo de abajo)
+    // DE los argumentos que recibimos podemos obtener la request y el URL
+    ({ request, url }) => {
+        // Con este console.Log podemos ver en la consola como en la Request esta el tipo de peticion, dominio, headers, mucha informacion de la solicitud
+        // console.log({ request, url });
+        // En la parte de la URL tenemos el nombre de las rutas, puerto, protocolo, (Asi evitamos ponerle el Localhost, ya que lo que nos importa son los nombres de ruta)
+        // La idea es regresar un TRue si cumplela condicion del callback
+
+        // Verificamos si en la URL la ruta es igual a las que tenemos en el arreglo
+        if( cacheNetworkFirst.includes( url.pathname ) ) return true;
+
+        return false;
+    },
+    new NetworkFirst()
 )
 
 // Queremos evitar el mensaje del Espere..., mostrar los eventos (Son los datos guardados de la aplicacion) y la parte de la renovacion
 // La estrategia implementada es la del Network first en la que si no tiene conexion, la traiga de lo que se tenga en el cache almacenado
-registerRoute(
+/*registerRoute(
     // Esta es la ruta para esta aplicacion que renueva el token
     // Para saber esta Ruta (Peticion) vimos en la consola del navegador los erroes que mostraba y ahi sacamos esta ruta 
+    // No deberiamos de tener la ruta del Localhost:Puerto porque esta ruta no estara cuando se pase la pagina a produccion
     new RegExp('https://localhost:4002/api/auth/renew'),
     new NetworkFirst()
 )
@@ -50,9 +90,10 @@ registerRoute(
 registerRoute(
     new RegExp('https://localhost:4002/api/events'),
     new NetworkFirst()
-)
+)*/
 
 // Posteos Offline
+// Estas si las dejamos separadas porque dependiendo de la peticion puede que requiramos o no ejecutar cierta logica
 // Creamos este plugin que lo podemos reutlizar para cualquier cantidad de rutas (Este lo sacamos de la documentacion)
 const bySyncPlugin = new BackgroundSyncPlugin('posteos-offline', {
     maxRetentionTime: 24 * 60 // Tiempo que durara el cache (El maximo es un dia)
