@@ -103,8 +103,23 @@ self.addEventListener( 'install', async (evento) => {
   // va a colocar los archivos en el cache que le estamos especificando (Despues de estos cambios tenemos que ejecutar los dos comando y precionar el SkipWitting)
   // Despues de esto tendremos en la parte del Cache nuestro "cache-1" donde tendremos los archivos que especificamos
   // En esta parte colocamos todos los recursos que nuestra aplicacion requiere para funcionar
+});
 
+// Vamos a ejecutar otro ciclo de vida que es el que se dispara hacer todas las estrategias del cache
+// Con "fetch" hace que se ejecute en cualquier peticion
+self.addEventListener( 'fetch', ( event ) => {
+  // Vamos a mostrar la peticion que se realiza
+  // Veremos en la consola cada vez que recargemos el navegador informacion de todos los request que se realizaron
+  // esto significa que todas las request son pasadas al Service Worker y este sabe cuando la request requiere o no el SW entonces no se hace nada
+  // pero si la request retorna algo y eso sea una Response, ahi podemos agregar logica para mostrar al usuario que si por ejemplo en cierta parte
+  // de la pagina, no se puede trabaja de manera Offline, solo se muestra un mensaje que es mejor que decir que no hay conexion a internet
+  console.log( event.request.url );
+  
 
 });
+
+
+
 // Despues de cada modificacion tenemos que ejecutar el comando del "yarn build"
 // y cuando termine ejecutamos el "serve -s build"
+// En el Manu-Application-Service Workers- skipWaiting

@@ -144,4 +144,20 @@ Service Worker con NPX
         aplicacion y se cierre el navegador web para que el nuevo service work entre en accion cuando alguien nuevamente intente entrar al sitio web
         La parte de la espera es donde en este caso esto el SKIP_WAITING, el problema es que el service worker exitenten puede todavia estar realizando proceso y asi esperamos a que termine de hacer sus tareas
     
-    
+    Estrategias del Cache
+
+        De elegir cual es la mejor, todo depende de como funciona la aplicacion
+        En este caso lo que almacenamos en el "cache-1" hay una estrategia para los recursos estaticos como los CDN de bootstrap y FontAwesome
+        estas las podemos alamcenar en el cache y no volvera a hacer falta que llege al servidor donde esta ese contenido, esta estrategia se llama
+            * Cache Only: Una vez esta el contenido en el cache jamas va a salir a internet a obtener esos recursos
+        
+        Si nos vamos a la pestana de Network vamos a ver que hay ciertos elementos (Recursos) que son servidos desde el ServiceWorker o Memory cache (Este es lo que tradicionalmente conocemos nosotros como
+        el cache del navegador)
+
+        Hay ciertas peticiones que podemos controla de manera mas amigable con excepcion de la login en la que no podemos dejar hacer algo al usuario si no sabemos que se ah autenticado
+        Viendo las peticiones que hace la aplicacion con el metodo Fetch que agregamos podemos saber cuales almacenar en cache, por ejemplo la URL que si no se completa
+        nos sale el mensaje de Esperando... (En esta no podemos implementar el cache only porque esta request valida el JWT), la estrategia que se usaria aqui seria:  
+            * Network First With Cache Fallback: Esto significa que primero intente verificar si tiene conexion a internet y puede solicitar la peticion que regrese de ahi la informacion
+                pero si no logra llegar porque no tiene conexion a internet, suponiendo que ya se hizo la peticion anteriormente, se puede almacenar esa respuesta en cache y cuando alguien mas
+                vuelva a solicitarla le podemos retornar la ultima respuesta generada, esto nos dejara pasar la aplicacion, porque sabemos que el JWT ya fue generado por la aplicacion y es valido
+                ademas que si esta el JWT significa que la persona estuvo autenticada por lo menos una vez ya que al hacer Logout se elimina el JWT
