@@ -51,3 +51,6 @@ Despues de los cambios implementados en el archivo de "sw-template.js" y la ejec
 que son el precache-v2 y el workbox-runtime donde tenemos el Boostrap almacenado y nos vamos a la pestana de Network vemos que fue servido del ServiceWorker, hay varias tecnicas que podemos emplear como guardarlo
 en un cache especial, plugins para indicar el tiempo en el que va a vivir los datos, esto seria por ejemplo para el JWT que solo tiene cierto tiempo de vida entonces si sacamos ese tiempo
 no tiene sentido seguir almacenando ese Token si ya expiro
+
+En este punto si queremos ejecutar un POST para crear nuevos datos, la parte del posteo de manera Offline requiere mucho mas trabajo como crearse una base de datos local pero con Workbox ya tenemos esa BD y crear
+todo lo demas mas facil (Podemos instalar mas modulos que requieramos)

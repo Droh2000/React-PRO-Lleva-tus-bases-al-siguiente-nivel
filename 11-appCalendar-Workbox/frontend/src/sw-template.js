@@ -9,7 +9,8 @@ workbox.precaching.precacheAndRoute( self.__WB_MANIFEST );
 
 // Para que el codigo que vamos a emplear sea mas elegante
 const { registerRoute } = workbox.routing;
-const { CacheFirst } = workbox.strategies;
+// Estrategias que vamos a utilizar
+const { CacheFirst, NetworkFirst } = workbox.strategies;
 
 // Ahora no tenemos que emplear el self.addEventlistener(... | Igual si quisieramos podriamos implementar todo esto en este archivo
 // La idea es que con workbox solo llamemos estas mismas funcion
@@ -30,6 +31,22 @@ registerRoute(
     new RegExp('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css'),
     new CacheFirst()
 )
+
+// Queremos evitar el mensaje del Espere..., mostrar los eventos (Son los datos guardados de la aplicacion) y la parte de la renovacion
+// La estrategia implementada es la del Network first en la que si no tiene conexion, la traiga de lo que se tenga en el cache almacenado
+registerRoute(
+    // Esta es la ruta para esta aplicacion que renueva el token
+    // Para saber esta Ruta (Peticion) vimos en la consola del navegador los erroes que mostraba y ahi sacamos esta ruta 
+    new RegExp('https://localhost:4002/api/auth/renew'),
+    new NetworkFirst()
+)
+// Para saber esta ruta, lo que hicimos fue que despues de implementar la de arriba ejecutamos el comando del "yarn PWA" (Comando el codigo de abajo)
+// y ejectuamos el servicio de la aplicacion, SkipWaitting, Activamos el modo Aoffline y al recargar la pagina en la consola veremos la ruta en el error
+registerRoute(
+    new RegExp('https://localhost:4002/api/events'),
+    new NetworkFirst()
+)
+
 // Los cambios implementados aqui hace que solo el SW cambio, no toda la aplicacion y para eso creamos el comando de 
 // yarn PWA para ejecutar solo este proceso 
 // Despues de eso volvemos a levantar el servidor con: serve -s build
