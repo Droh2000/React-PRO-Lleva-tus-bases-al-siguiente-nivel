@@ -67,6 +67,28 @@ registerRoute(
     'POST'// Especificamos el tipo de peticion
 )
 
+// Implementacion del PUT y DELETE
+// Ahora en los PUT como son dinamicos basicamente tendriamos que evaluar solo la ruta que hace la peticion y despues de cierto Slash que incluya los demas
+// toda esa parte ejecutandose en un PUT
+registerRoute(
+    new RegExp('http://localhost:4002/api/events/'),// La URL es la misma pero tomara en cuenta todo el codigo que venga despues ejecutandolo en un DELETE
+    new NetworkOnly({
+        plugins: [bgSyncPlugin]
+    }),
+    'DELETE'
+)
+
+registerRoute(
+    new RegExp('http://localhost:4002/api/events/'),
+    new NetworkOnly({
+        plugins: [bgSyncPlugin]
+    }),
+    'PUT'
+)
+// Si alguien actualiza algo que algien mas borro pero no se da cuenta que ya esta borrado porque esta offline y no obtuvo los cambios
+// Aqui el ultimo request es lo que se queda, por ejemplo en este caso la persona que esta Ofline al conectarse otravez les dara un error
+// ya depende de nosotros de agregar las validaciones para que se muestre de manera amigable como un mensaje
+
 // Los cambios implementados aqui hace que solo el SW cambio, no toda la aplicacion y para eso creamos el comando de 
 // yarn PWA para ejecutar solo este proceso 
 // Despues de eso volvemos a levantar el servidor con: serve -s build

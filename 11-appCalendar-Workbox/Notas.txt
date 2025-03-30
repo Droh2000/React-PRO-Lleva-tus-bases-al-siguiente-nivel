@@ -71,3 +71,10 @@ todo lo demas mas facil (Podemos instalar mas modulos que requieramos)
         donde en el contenido esta el nombre que le especificamos de "posteo-offline", Si recargamos el navegador WEB no veremos el evento en la aplicacion
         Pero si desactivamos la opcion Offline, el navegador web hara automaticamente el Posteo (No aparece la informacion en la aplicacion porque no estamos trabajando con
         web sockets) asi que para ver los datos tenemos que volver a recargar el navegador WEB 
+
+Otra caracteristica importante que tenemos es el "MANIFEST" que esta en la pestana de Application en la primera opcion del menu lateral
+aqui dice cual es el color de la aplicacion, lo iconos, esto lo crea por defecto el NPX react APP, este archivo lo podemos configurar desde
+la carpeta build, aqui dentro del "manifest.json" le podemos poner el nombre de la aplicacion (Pero estos cambios no se hacen aqui porque esta carpeta
+se borra y vuelve a generar cada vez que ejecutamos el comando), los cambios se hacen en la carpeta Public/manifest.json
+Como hizimos cambios en la aplicacion de REACT hay que ejecutar el "yarn build", ejecutar el de Serve, recargar pagina, precionar el boton para que no Waitting
+y asi veremos los cambios
