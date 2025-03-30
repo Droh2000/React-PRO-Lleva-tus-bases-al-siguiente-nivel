@@ -1,5 +1,33 @@
 Implementacion de la PWA usando Workbox
 
-
-
 En esta parte Borramos todo lo que hicimos en la seccion anterior porque ahora lo vamos a crear de manera automatica
+
+Tenemos diferentes formas para trabajar el Service Worker, una es usando el CLI de worbox para ayudarnos a generar el SW de manera automatica
+pero igual podemos hacer configuraciones manuales
+Primero tenemos que instalar este comando en una terminal como administrador:
+    * npm install workbox-cli --global
+Despues de la instalacion tenemos que cerrar todo el VS code y volver a ejecutar los servicios
+
+Ubicandonos en la terminal de VS code en la carpeta de Fronted ejecutamos
+    * workbox wizard
+    Despues nos pregunta cual es el directorio que queremos desplegar
+    * Elegimos "build" que es la carpeta que queremos publicar y ahi es donde colocara el Service Worker
+    Despues nos pregunta los archivos que va a ejecutar (Los archivos que seran almacenados en cache)
+    Como queremos mantener todos los archivos solo precionamos ENTER
+    Despues nos pregunta donde queremos guardar el service worker, dejamos la ruta por defecto solo precionando ENTER
+    Luego nos pregunta si queremos guardar las opciones en un archivo de configuracion (Solo precionamos ENTER)
+    Por ultimo escribimos N de no porque nuestro proyecto no incluye ese archivo que nos pregunta
+
+Despues de esto tendremos creado el archivo del "workbox-config" para generar el Service Worker tenemos que ejecutar el comando
+    * workbox generateSW workbox-config.js
+
+Ahora si dentro de la carpeta de Build/static tendremos el Service worker, estos archivos generados no los deberiamos de tocar nunca porque
+son geenrados basado en la configuracion del service worker
+
+Si ejecutamos el comando "serve -s build" (El comanod que genera el Service Worker se ejecuara cada vez que la aplicacion sufra cambios internos
+pero este proceso igual se puede automatizar), despues de ejecutar el comando veremos en la pestana de Application que no aparece el SW porque como hizimos la configuracion manual
+tenemos que decirle a la aplicacion de React que instale el SW (Esto lo hacemos en el archivo INDEX.HTML de la carpeta PUBLIC)
+
+Despues de la instalacion del SW en la pestana de Application en el apartado del Cache del Cache Storage tenemos un "workbox-precache" donde veremos todo el monton de archivos
+que se estan almacenando que seria todo lo que tenemos en la varpeta build, si cambiamos a la opcion de "OFFLINE" veremos que nuestra app no se cae pero tenemos el 
+problema que se queda con el mensaje de Espere... por lo que tenemos que arreglar ese problema

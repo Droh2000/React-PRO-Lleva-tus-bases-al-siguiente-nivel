@@ -42,5 +42,27 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!--
+        Configuracion del Service Worker
+
+        Este solo se debe de instalar si estamos en el modo de produccion
+    -->
+    <script>
+      // Sabemos si estamos en produccion mediante el "%NODE_ENV%", como tenemos una Applicacion de REACT tenemos esta variable de entorno disponible
+      // Esto nos dara TRUE si estamos en produccion
+      const isProduction = ( '%NODE_ENV%' === 'production' );
+
+      // Preguntamos si estamos en produccion y si  el serviceWorker existe en el "navigator" que este seria el objeto que esta corriendo en el aplicacion
+      // (Si la tecnologia del SW existe ahi) entocnes vamos a poder registrar el SW
+      if( isProduction && 'serviceWorker' in navigator ){ // El problema es que no todos los navegadores soportar esto, asi que lo podemos poner en el ELSE en caso de eso
+        // Hacemos la instalacion manual
+        navigator.serviceWorker.register('sw.js');
+      }
+      // Despues de este cambio ejecutamos:
+      // yarn build -> workbox generateSW workbox-config.js -> serve -s build
+      
+
+    </script>
   </body>
 </html>
