@@ -31,3 +31,18 @@ tenemos que decirle a la aplicacion de React que instale el SW (Esto lo hacemos 
 Despues de la instalacion del SW en la pestana de Application en el apartado del Cache del Cache Storage tenemos un "workbox-precache" donde veremos todo el monton de archivos
 que se estan almacenando que seria todo lo que tenemos en la varpeta build, si cambiamos a la opcion de "OFFLINE" veremos que nuestra app no se cae pero tenemos el 
 problema que se queda con el mensaje de Espere... por lo que tenemos que arreglar ese problema
+
+Ahora Workbox nos genera automaticamente dentro de la carpeta build los archivos del SW, el problema de esa configuracion es que no tenemos control de lo que realizo por defecto
+la idea es que nosotros configuremos el SW y sea Workbox quien lea la carpeta del Build y ahi coloque los archivos de la app de React
+Cuando ejecutamos el comando del:
+    * workbox generateSW workbox-config.js
+Esto lo crea de manera por defecto y usa la configuracion que este en ese archivo pero ahora vamos a usar otra forma para meterle el SW pero que no podremos usar el comando de arriba
+porque ese comando solo se puede usar cuando dentro del archivo se emplea codigo que solo es entendible por ese comando
+
+Dentro de la carpeta SRC creamos el archivo "sw-template" que sera para que el Workbox tome y en base a ese contruya el SW
+Despues de las implementacion en los archivo ya no podremos ejcutar el comando de arriba porque nos dara error, el comando que ejecutaremos ahora:
+    * workbox injectManifest
+Despues de esto ejecutamos el comando del "serve -s build", para que se active precionamos el "skipWaiting"
+Para verificar que toma las nueva configuracion si nos vamos al arcihvo de "sw.js" en la carpeta de "build" veremos que el codigo es mas sencillo
+Ahora tenemos el control absoluto del SW y podemos implementar diferentes tecnicas que estan en la documentacion de Workbox sin importar si estamos en una aplicacion de React, Angular o lo que sea
+Por ultimo configuramos el comando en el "package.json" para que se ejecute automaticamente para que cuando se haga el Build automaticamente ejecute ese comando
