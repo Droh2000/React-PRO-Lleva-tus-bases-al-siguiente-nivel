@@ -113,9 +113,31 @@ self.addEventListener( 'fetch', ( event ) => {
   // esto significa que todas las request son pasadas al Service Worker y este sabe cuando la request requiere o no el SW entonces no se hace nada
   // pero si la request retorna algo y eso sea una Response, ahi podemos agregar logica para mostrar al usuario que si por ejemplo en cierta parte
   // de la pagina, no se puede trabaja de manera Offline, solo se muestra un mensaje que es mejor que decir que no hay conexion a internet
-  console.log( event.request.url );
-  
+  // console.log( event.request.url );
 
+  // Hay varias implementaciones para esta estrategia
+  // Este es el request que queremos verificar y decimos que si es cualquier URL exceptuando el que queremos verificar entonces nos saque
+  // Asi la logica que pondremos abajo solo aplicara para esta peticion y las demas que se ejecutan no les afecta
+  if( event.request.url !== 'http//localhost:4000/api/auth/renew' ) return;
+
+  // Queremos ir al backend y que este nos resoponda la peticion
+  // Aqui estamo suando el FetchAPI y le pasamos la request que viene en el evento
+  const resp = fetch( event.request )
+    // Si se ejecuta este .then quiere decir que se logro llegar a la request y se tiene la informacion de la response
+    // Si tenemos una respuesta entonces regresamos esa informacion
+    .then( response => {
+      // Esta respuesta la tenemos que clonar si la queremos usar mas de una vez (Esta clonada es la que usaria el navegador web)
+      return response.clone();
+    })
+    // Hay que estar pendientes si hay un erro porque si eso pasa fallaria y solo funcionaria si hay internet (Seria Network Only)
+    .catch(err => {
+      console.log('offline response');
+      // Deberiamos retornar algo que este en el cache pero en este punto no sabemos que
+
+    });
+
+    // Vamos a responder con lo que nos regresa la promesa de arriba
+    event.respondeWith( resp );
 });
 
 

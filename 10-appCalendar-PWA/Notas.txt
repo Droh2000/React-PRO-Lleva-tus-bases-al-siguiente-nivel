@@ -161,3 +161,4 @@ Service Worker con NPX
                 pero si no logra llegar porque no tiene conexion a internet, suponiendo que ya se hizo la peticion anteriormente, se puede almacenar esa respuesta en cache y cuando alguien mas
                 vuelva a solicitarla le podemos retornar la ultima respuesta generada, esto nos dejara pasar la aplicacion, porque sabemos que el JWT ya fue generado por la aplicacion y es valido
                 ademas que si esta el JWT significa que la persona estuvo autenticada por lo menos una vez ya que al hacer Logout se elimina el JWT
+                (Esta estrategia nos sirve para cuando queremos verificar si el JWT es valido para una peticion que lo requiere)
