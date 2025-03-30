@@ -167,3 +167,11 @@ Service Worker con NPX
             Asi al poner en OFFLINE y recargar la pagina ya no nos saldra el mensaje de Esperando... ya que la aplicacion si ubtuvo una peticion, esto lo podemos ver en la pestana de Network
             donde se muestran los recursos, el que se llama "renew" que viene del "(ServiceWorker)"
             Ahora en la consola tenemos errores, porque lo que seria las funcionalidades de la pagina no las tenemos almacenadas en cache 
+
+            En esta parte vamos a almacenar la parte de los eventos que seria para que la aplicacion pueda mostrar la informacion sin acceso a internet
+            Estos eventos lo vemos en la pestana de Application/Cache en "cache-dynamic" esta la URL 
+
+            Pero tenemos mas problemas y son las acciones de la aplicacion donde se ejecutan los Post/Put/Delete, las peticiones PUT en la request veremos que son dinamicas, no es como que podamos
+            colocarlas en un arreglo como aqui, porque esto va a variar ademas que en el Cache Storage no se pueden guardar PUTs ya que la data es diferente
+            Esto ya es mas avanzado
+            Mas adelante veremos esto mismo con Workbox donde tenemos plugin que nos facilitan la existencia para no crear todo este codigo manualmente donde ya solo mandamos a llamar funciones

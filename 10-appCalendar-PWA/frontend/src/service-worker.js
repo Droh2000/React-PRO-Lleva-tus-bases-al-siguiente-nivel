@@ -105,6 +105,13 @@ self.addEventListener( 'install', async (evento) => {
   // En esta parte colocamos todos los recursos que nuestra aplicacion requiere para funcionar
 });
 
+// Vamos a manejar el otro request donde tenemos los Evento (La data almacenada de la aplicacion)
+// En este arreglo colocamos los URL que queremos manejar para la condicion donde verificamos las peticiones
+const apiOfflineFallbacks = [
+  'http://localhost:4000/api/auth/renew',
+  'http://localhost:4000/api/events'
+]
+
 // Vamos a ejecutar otro ciclo de vida que es el que se dispara hacer todas las estrategias del cache
 // Con "fetch" hace que se ejecute en cualquier peticion
 self.addEventListener( 'fetch', ( event ) => {
@@ -118,7 +125,11 @@ self.addEventListener( 'fetch', ( event ) => {
   // Hay varias implementaciones para esta estrategia
   // Este es el request que queremos verificar y decimos que si es cualquier URL exceptuando el que queremos verificar entonces nos saque
   // Asi la logica que pondremos abajo solo aplicara para esta peticion y las demas que se ejecutan no les afecta
-  if( event.request.url !== 'http//localhost:4000/api/auth/renew' ) return;
+  //  if( event.request.url !== 'http//localhost:4000/api/auth/renew' ) return;
+
+  // Despues de la implementacion del arreglo de arriba
+  // Donde preguntamos que si la request no se incluye en el arreglo entonces que se salga y evita el codigo de abajo
+  if( !apiOfflineFallbacks.includes( event.request.url ) ) return;
 
   // Queremos ir al backend y que este nos resoponda la peticion
   // Aqui estamo suando el FetchAPI y le pasamos la request que viene en el evento
@@ -126,6 +137,13 @@ self.addEventListener( 'fetch', ( event ) => {
     // Si se ejecuta este .then quiere decir que se logro llegar a la request y se tiene la informacion de la response
     // Si tenemos una respuesta entonces regresamos esa informacion
     .then( response => {
+
+      // Como mecanismo de seguridad en el caso que se haga la peticon Fetch y en el Response no venga los datos, sino un mensaje de error
+      // donde en este caso retornamos lo mismo del Catch
+      if( !response ){
+        return caches.match( event.request );
+      }
+
       // Esta es la respuesta que queremos almacenar en el cache para esto nos tenemos que abrir o crear una cache y luego ahi agregarlo
       // En este caso le damos el nombre de "cache-dynamic" con el .then nos regresara el cache y tenemos acceso de lectura y escritura
       caches.open('cache-dynamic').then( cache => {
