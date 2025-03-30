@@ -126,18 +126,27 @@ self.addEventListener( 'fetch', ( event ) => {
     // Si se ejecuta este .then quiere decir que se logro llegar a la request y se tiene la informacion de la response
     // Si tenemos una respuesta entonces regresamos esa informacion
     .then( response => {
+      // Esta es la respuesta que queremos almacenar en el cache para esto nos tenemos que abrir o crear una cache y luego ahi agregarlo
+      // En este caso le damos el nombre de "cache-dynamic" con el .then nos regresara el cache y tenemos acceso de lectura y escritura
+      caches.open('cache-dynamic').then( cache => {
+        // Una forma eficiente de poner contenido en el cache es con el .put, asi cuando alguien mas vuelva a hacer esa request, el cache ya sabe que request es
+        // y asi si se vuelve a hacer esa request queremos responder el "response"
+        cache.put( event.request, response );
+      }) // Esto es lo que estamos guardando en el cache (Si esto falla no llevara al CATCH de afuera)
+      
       // Esta respuesta la tenemos que clonar si la queremos usar mas de una vez (Esta clonada es la que usaria el navegador web)
       return response.clone();
     })
     // Hay que estar pendientes si hay un erro porque si eso pasa fallaria y solo funcionaria si hay internet (Seria Network Only)
     .catch(err => {
       console.log('offline response');
-      // Deberiamos retornar algo que este en el cache pero en este punto no sabemos que
-
+      // Deberiamos retornar algo que este en el cache, que seria la response (La respuesta anterior) y el cache sabe que esa es la respuesta
+      // con la funcion ".match" se encarga de buscar entre todos los caches que exista la respuesta
+      return caches.match( event.request );
     });
 
     // Vamos a responder con lo que nos regresa la promesa de arriba
-    event.respondeWith( resp );
+    event.respondWith( resp );
 });
 
 

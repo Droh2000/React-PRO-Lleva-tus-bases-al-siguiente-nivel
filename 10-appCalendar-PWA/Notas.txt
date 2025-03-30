@@ -162,3 +162,8 @@ Service Worker con NPX
                 vuelva a solicitarla le podemos retornar la ultima respuesta generada, esto nos dejara pasar la aplicacion, porque sabemos que el JWT ya fue generado por la aplicacion y es valido
                 ademas que si esta el JWT significa que la persona estuvo autenticada por lo menos una vez ya que al hacer Logout se elimina el JWT
                 (Esta estrategia nos sirve para cuando queremos verificar si el JWT es valido para una peticion que lo requiere)
+
+            Despues de la implementacion en el archivo de "service-worker.js" en la pestana de Application-Cache tenemos el "cache-dynamic" donde dentro tenemos la ruta de la peticion
+            Asi al poner en OFFLINE y recargar la pagina ya no nos saldra el mensaje de Esperando... ya que la aplicacion si ubtuvo una peticion, esto lo podemos ver en la pestana de Network
+            donde se muestran los recursos, el que se llama "renew" que viene del "(ServiceWorker)"
+            Ahora en la consola tenemos errores, porque lo que seria las funcionalidades de la pagina no las tenemos almacenadas en cache 
