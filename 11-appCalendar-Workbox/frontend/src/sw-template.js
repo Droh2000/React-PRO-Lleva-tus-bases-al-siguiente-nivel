@@ -2,6 +2,9 @@
 // Este ImportScripts es como el "required" de Node y usamos esto que sacamos de la pagina de Workbox
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js');
 
+// Cargamos el modulo para hacer posteos sin conexion (No lo instalamos, solo lo importamos porque lo estamos tomando de la importacion de arriba)
+workbox.loadModule('workbox-background-sync');
+
 // Aqui le decimos a Workbox que revice el directorio en el que esta y que instale todo lo que esta en el precahe
 // que seria todo los archivos que estan definidos en el "workbox-config.js" (Durante el proceso de instalacion esto es lo que se va a ejecutar)
 // Como no sabemos especificamente los nombre de archivos que vamos requerir con esta variable Workbox busca los archivos que nos propociona la importacion de arriba
@@ -10,7 +13,9 @@ workbox.precaching.precacheAndRoute( self.__WB_MANIFEST );
 // Para que el codigo que vamos a emplear sea mas elegante
 const { registerRoute } = workbox.routing;
 // Estrategias que vamos a utilizar
-const { CacheFirst, NetworkFirst } = workbox.strategies;
+const { CacheFirst, NetworkFirst, NetworkOnly } = workbox.strategies;
+
+const { BackgroundSyncPlugin } = workbox.backgroundSync;
 
 // Ahora no tenemos que emplear el self.addEventlistener(... | Igual si quisieramos podriamos implementar todo esto en este archivo
 // La idea es que con workbox solo llamemos estas mismas funcion
@@ -45,6 +50,21 @@ registerRoute(
 registerRoute(
     new RegExp('https://localhost:4002/api/events'),
     new NetworkFirst()
+)
+
+// Posteos Offline
+// Creamos este plugin que lo podemos reutlizar para cualquier cantidad de rutas (Este lo sacamos de la documentacion)
+const bySyncPlugin = new BackgroundSyncPlugin('posteos-offline', {
+    maxRetentionTime: 24 * 60 // Tiempo que durara el cache (El maximo es un dia)
+});
+
+// Le pasamos la ruta que se ejecuta cuando hacemos el posteo en la aplicacion (Al que se le hace el posteo)
+registerRoute(
+    new RegExp('http://localhost:4002/api/events'),
+    new NetworkOnly({
+        plugins: [bgSyncPlugin] // Aqui podemos mandar mas plugins si asi lo requerimos
+    }),// Tipo de estrategia que aplicara
+    'POST'// Especificamos el tipo de peticion
 )
 
 // Los cambios implementados aqui hace que solo el SW cambio, no toda la aplicacion y para eso creamos el comando de 

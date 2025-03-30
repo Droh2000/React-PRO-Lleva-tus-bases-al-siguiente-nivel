@@ -54,3 +54,20 @@ no tiene sentido seguir almacenando ese Token si ya expiro
 
 En este punto si queremos ejecutar un POST para crear nuevos datos, la parte del posteo de manera Offline requiere mucho mas trabajo como crearse una base de datos local pero con Workbox ya tenemos esa BD y crear
 todo lo demas mas facil (Podemos instalar mas modulos que requieramos)
+
+    BackgroundSync (Hacer Posteos sin Conexion)
+
+        Debemos ser eficientes con los datos que almacenemos de los post, es recomendable no pasarse de los 30 megas en los datos que almacenemos
+        ademas le damos un tiempo en el que si la persona nunca se conecto a internet despues de cierto tiempo se borran los posts, ademas que saber que todo esto es volatil
+        y la persona puede borrar estos datos, borrando el cache o el historial de navegador, se eliminaran todos los datos que almacenemos
+
+        En pocas palabras, creamos el Pulgin y este es lo que almacenamos dentro de la estrategia en el Network Only, se usa esa estrategia porque las peticiones
+        que no sean GET solo funcionan con esta estrategia
+
+        Despues de la implementacion en el archivo de "sw-template" y ejecutados los comandos, si nos vamos a la pestana para activar el modo Offline y hacemos un POST
+        en la consola veremos un error pero es diferente ya por defecto con la estrategia del NetworkOnly da ese mensaje pero tambien 
+        podemos retornar un mensaje para que nuestra aplicacion lo maneje (Esto lo haremos mas adelante)
+        Si nos vamos al pestana de Application en la parte del Storage en el IndexDB tenemos dentro el "workbox-backgroun-sync" dentro estan los request donde esta el "queue name"
+        donde en el contenido esta el nombre que le especificamos de "posteo-offline", Si recargamos el navegador WEB no veremos el evento en la aplicacion
+        Pero si desactivamos la opcion Offline, el navegador web hara automaticamente el Posteo (No aparece la informacion en la aplicacion porque no estamos trabajando con
+        web sockets) asi que para ver los datos tenemos que volver a recargar el navegador WEB 
