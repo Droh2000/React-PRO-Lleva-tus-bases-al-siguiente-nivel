@@ -78,3 +78,10 @@ la carpeta build, aqui dentro del "manifest.json" le podemos poner el nombre de 
 se borra y vuelve a generar cada vez que ejecutamos el comando), los cambios se hacen en la carpeta Public/manifest.json
 Como hizimos cambios en la aplicacion de REACT hay que ejecutar el "yarn build", ejecutar el de Serve, recargar pagina, precionar el boton para que no Waitting
 y asi veremos los cambios
+
+Hacer que desde la interface mostremos si estamos online u offline, para esto vamos a instalar un paquete
+En la carpeta de Fronted ejecutamos:
+    * yarn add react-detect-offline
+Para probar los cambios primero hacemos un "yarn start", esto seria antes de generar la carpeta de produccion y hacer todo lo demas
+Asi ademas desde la pestana de Application podemos activar o desactivar la opcion de Offline para ver los cambios en tiempo real
+Despues de esto como hicimos cambios en la aplicacion hay que ejecutar el "yarn build", despues el "serve -s build"
