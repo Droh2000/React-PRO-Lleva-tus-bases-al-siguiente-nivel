@@ -5,3 +5,7 @@ a lo largo de todos los componentes)
 
 Todo lo que hicimos aqui es crearnos un espacio en nuestra aplicacion para mantener el estado, y el estado es el como esta
 la informacion que esta fluyendo internamente en la aplicacion
+
+Cuando se ejecuta lo que implementamos que se manda a llamar el dispatch de esa accion se va a l reducer, detecta cual de las acciones
+es en el switch y manda a crear un nuevo estado basado en la informacion que le esamos mandando, la pripiedad "isLoading" es False y
+toma la nueva localizacion que viene en el payload y est va a redibujar todos los componentes donde se este utilizando
