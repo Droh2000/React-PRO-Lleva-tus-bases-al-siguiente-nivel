@@ -19,3 +19,8 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+/* Para indicarle al usuario que puede hacer click en el cuadro del lugar que se muestra al buscar  */
+.pointer {
+    cursor: pointer;
+}
