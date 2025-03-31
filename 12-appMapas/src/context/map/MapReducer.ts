@@ -6,7 +6,11 @@ type MapAction = { type: 'setMap', payload: Map };
 export const MapReducer = ( state: MapState, action: MapAction ): MapState => {
     switch ( action.type ) {
         case 'setMap':
-            
+            return {
+                ...state, // Sacamos una copia actual del estado
+                isMapReady: true,
+                map: action.payload, // Establecemos el mapa
+            }
         default:
             return state
     }

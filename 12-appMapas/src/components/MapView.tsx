@@ -2,7 +2,7 @@
 // Aqui requerimos acceso la informacion que se encuentra en el context provider, en la parte del PalcesProvider
 
 import { useContext, useLayoutEffect, useRef } from "react";
-import { PlacesContext } from "../context";
+import { MapContext, PlacesContext } from "../context";
 import { Loading } from "./Loading";
 import mapboxgl from "mapbox-gl";
 
@@ -10,6 +10,9 @@ import mapboxgl from "mapbox-gl";
 export const MapView = () => {
 
     const { isLoading, useLocation } = useContext( PlacesContext );
+
+    // Queremos establecer el mapa en el reducer
+    const { setMap } = useContext( MapContext );
 
     // Por como esta la implementacion en la documentacion, podriamos solo con poner un ID en los DIV que estan dentro del return
     // pero como queremos que se puedan generar X cantidad de mapas y esto al ser ID solo se renderiza una sola vez
@@ -28,6 +31,7 @@ export const MapView = () => {
                 center: useLocation,
                 zoom: 14
             });
+            setMap(map);
         }
     }, [isLoading]);
 

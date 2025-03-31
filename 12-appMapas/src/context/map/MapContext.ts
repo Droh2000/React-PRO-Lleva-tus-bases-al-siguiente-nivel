@@ -6,7 +6,9 @@ import { createContext } from "react";
 // Esta es la informacion que vamos a exponer a los componentes
 interface MapContextProps {
     isMapReady: boolean,
-    map?: Map
+    map?: Map,
+    // Para que acepte los metodos
+    setMap: (map: Map) => void,
 }
 
 export const MapContext = createContext({} as MapContextProps);

@@ -17,13 +17,20 @@ interface Props {
     children: React.JSX.Element | React.JSX.Element[]
 }
 
+// Esto es lo que los demos componentes pueden observar (La informacion que les vamos a compartir es lo que esta en los values)
 export const MapProvider = ( {children}: Props) => {
 
     const [state, dispatch] = useReducer(MapReducer, INITIAL_STATE);
 
+    const setMap = ( map: Map ) => {
+        dispatch({ type: 'setMap', payload: map });
+    }
+
     return (
         <MapContext.Provider value={{
-            ...state
+            ...state,
+            // Tuvimos que agregar esto en la interfaz para permitir el dato
+            setMap,
         }}>
             {children}
         </MapContext.Provider>
