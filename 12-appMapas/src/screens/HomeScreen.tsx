@@ -1,4 +1,4 @@
-import { BtnMyLocation, MapView, ReactLogo } from "../components"
+import { BtnMyLocation, MapView, ReactLogo, SearchBar } from "../components"
 
 export const HomeScreen = () => {
     return (
@@ -6,6 +6,7 @@ export const HomeScreen = () => {
             <MapView/>
             <BtnMyLocation/> {/* Colocamos el boton en la pantalla */}
             <ReactLogo/>
+            <SearchBar/>
         </div>
     )
 }
