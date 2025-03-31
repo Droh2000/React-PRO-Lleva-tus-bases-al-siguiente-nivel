@@ -9,6 +9,7 @@ interface MapContextProps {
     map?: Map,
     // Para que acepte los metodos
     setMap: (map: Map) => void,
+    getRouteBeetwenPoints: (start: [number, number], end: [number, number]) => Promise<void>
 }
 
 export const MapContext = createContext({} as MapContextProps);

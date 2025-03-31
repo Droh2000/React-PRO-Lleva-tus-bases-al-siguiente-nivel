@@ -88,11 +88,17 @@ export const MapProvider = ( {children}: Props) => {
         dispatch({ type: 'setMap', payload: map });
     }
 
+    // Para poder juntar dos lugares, ocupamos el punto inicial y final que contiene cada uno sus coordenadas
+    const getRouteBeetwenPoints = async (start: [number, number], end: [number, number]) => {
+
+    }
+
     return (
         <MapContext.Provider value={{
             ...state,
             // Tuvimos que agregar esto en la interfaz para permitir el dato
             setMap,
+            getRouteBeetwenPoints,
         }}>
             {children}
         </MapContext.Provider>
