@@ -1,0 +1,4 @@
+Requerimos en el arbol de componentes tener un espacio para tener la informacion de la geolocalizacion del usuario
+y saber si ya tenemos la ubicacion lista, usaremos el Context porque ya viene por defecto en react, asi que nos vamos
+a crear un contexto solo relacionado a la parte de los lugares (Las colocamos en el contexto para que esten disponibles
+a lo largo de todos los componentes)
