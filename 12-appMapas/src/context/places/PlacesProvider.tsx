@@ -4,6 +4,7 @@ import { useEffect, useReducer } from "react"
 import { PlacesContext } from "./PlacesContext"
 import { placesReducer } from "./placesReducer"
 import { getUserLocation } from "../../helpers"
+import { searchApi } from "../../apis"
 
 // Definimos como queremos que se mire el estado
 export interface PlacesState {
@@ -37,12 +38,30 @@ export const PlacesProvider = ({ children }: Props) => { // Recibe un JSX como a
         .then( arg => dispatch({ type: 'setUserLocation', payload: arg }))
     },[]);
 
+    // Aqui queremos realizar toda la parte de la busquedad segun la palabra escrtia por el usuario en el campo de texto
+    const searchPlacesByTerm = async( query: string ) => {
+        // Si el usuario no escribio nada significa que quiere borrarlo
+        if( query.length === 0 ) return[];
+        // Para hacer la peticion (ya tenemos datos preconfigurados en la variable) requerimos algunso datos adicionales como es la proximidad
+        // en este caso verificamos si no existe
+        if( !state.useLocation ) throw new Error('No hay ubicacion del usuario');
+
+        // Hacemos la peticion
+        const resp = await searchApi.get(`/${ query }.json`, {
+            // En los parametros configuramos la promiximidad
+            params: {
+                proximity: state.useLocation.join(',') // Los juntamos por una coma porque aqui es como los espera Mapbox
+            }
+        });
+    }
+
+
     return (
         // El Value le pasamos los valores inicializados que son los valores del PlacesContextProps y es por eso que en el Context no 
         // iniciamos los valores y solo le pusimos un "as" ya que tambien lo tenemos que inicializar aqui
         <PlacesContext.Provider value={{
             ...state,// Esparcimos el State para poder tomar cualquier informacion que nesecitemos del contexto
-
+            searchPlacesByTerm,
         }}>
             { children }
         </PlacesContext.Provider>

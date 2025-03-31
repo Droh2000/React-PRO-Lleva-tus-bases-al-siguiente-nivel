@@ -7,6 +7,7 @@ import { createContext } from "react";
 export interface PlacesContextProps {
     isLoading: boolean,
     useLocation?: [ number, number ],
+    searchPlacesByTerm: (query: string) => Promise<any>,
 }
 
 // Como estamos en TS tenemos que definir como luce este contexto

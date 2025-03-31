@@ -1,4 +1,5 @@
-import { ChangeEvent, useRef } from "react"
+import { ChangeEvent, useContext, useRef } from "react"
+import { PlacesContext } from "../context";
 
 export const SearchBar = () => {
 
@@ -6,6 +7,8 @@ export const SearchBar = () => {
     // HTTP por cada tecla o felchas que toquemos (hay puetes para esto pero lo vamos a hacer manual)
     // Haremos que cuando la persona deje de escribir por N cantidad de milesimas de segundos entonces ahi es donde emitimos la accion
     const debounceRef = useRef<NodeJS.Timeout>(null); // De tipo generico este es el tipo para que sepa que es un timer
+
+    const { searchPlacesByTerm } = useContext( PlacesContext );
 
     // Le especificamos el tipo de dato para saber el autocompletado
     const onQueryChanged = ( event: ChangeEvent<HTMLInputElement> ) => {
@@ -15,7 +18,8 @@ export const SearchBar = () => {
 
         // Definimos que el Timeout se ejecute este timepo
         debounceRef.current = setTimeout(() => {
-            
+            // Aqui vamos a mandar a llamar la peticion, tenemos que usar su correspondiente contexto
+            searchPlacesByTerm( event.target.value );// Le tenemos que pasar el Query
         }, 1000);
     }
 
