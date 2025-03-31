@@ -9,3 +9,8 @@ la informacion que esta fluyendo internamente en la aplicacion
 Cuando se ejecuta lo que implementamos que se manda a llamar el dispatch de esa accion se va a l reducer, detecta cual de las acciones
 es en el switch y manda a crear un nuevo estado basado en la informacion que le esamos mandando, la pripiedad "isLoading" es False y
 toma la nueva localizacion que viene en el payload y est va a redibujar todos los componentes donde se este utilizando
+
+Instalacion de MapBox
+    * Tenemos que registrarnos en la pagina para obtener un Token de acceso
+    * Lo instalamos:
+        - yarn install --save mapbox-gl
