@@ -5,17 +5,22 @@ import { PlacesContext } from "./PlacesContext"
 import { placesReducer } from "./placesReducer"
 import { getUserLocation } from "../../helpers"
 import { searchApi } from "../../apis"
+import { Feature, PlacesResponse } from "../../interfaces/places"
 
 // Definimos como queremos que se mire el estado
 export interface PlacesState {
     isLoading: boolean,
     useLocation?: [ number, number ],
+    isLoadingPlaces: boolean,
+    places: Feature[],
 }
 
 // Cuando carga la aplicacion inmediatamente vamos a querer aplicandole el Loading para saber si tenemos la ubicacion de la persona
 const INITIAL_STATE: PlacesState = {
     isLoading: true,
     useLocation: undefined,
+    isLoadingPlaces: false,
+    places: []
 }
 
 // Saber como luce el Componente hijo que recibe como argumento
@@ -39,20 +44,29 @@ export const PlacesProvider = ({ children }: Props) => { // Recibe un JSX como a
     },[]);
 
     // Aqui queremos realizar toda la parte de la busquedad segun la palabra escrtia por el usuario en el campo de texto
-    const searchPlacesByTerm = async( query: string ) => {
+    const searchPlacesByTerm = async( query: string ): Promise<Feature[]> => {
         // Si el usuario no escribio nada significa que quiere borrarlo
         if( query.length === 0 ) return[];
         // Para hacer la peticion (ya tenemos datos preconfigurados en la variable) requerimos algunso datos adicionales como es la proximidad
         // en este caso verificamos si no existe
         if( !state.useLocation ) throw new Error('No hay ubicacion del usuario');
 
+        // Este dispatch lo mandamos a llamar aqui porque en este momento vamos a empezar a hacer la carga de los lugares con la peticion HTTP
+        dispatch({ type: 'setloadingPlaces' });
+
         // Hacemos la peticion
-        const resp = await searchApi.get(`/${ query }.json`, {
+        // Hay que ponerle el tipo de dato ya que es any y no tenemos autoayuda (Este tipado lo sacamos de la respues de Postman que obtenemos del endpoint de Mapbox convirtiendolo al tipado de Typescript)
+        const resp = await searchApi.get<PlacesResponse>(`/${ query }.json`, {
             // En los parametros configuramos la promiximidad
             params: {
                 proximity: state.useLocation.join(',') // Los juntamos por una coma porque aqui es como los espera Mapbox
             }
         });
+
+        // Cuando ya tengamos los datos despues de hacerse la peticion le establecemos los datos
+        dispatch({ type: 'setPlaces', payload: resp.data.features });
+
+        return resp.data.features;
     }
 
 

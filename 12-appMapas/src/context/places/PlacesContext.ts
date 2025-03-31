@@ -1,5 +1,6 @@
 // Aqui tenemos el contexto de React
 import { createContext } from "react";
+import { Feature } from "../../interfaces/places";
 
 // Definimos como se mira el contexto (No hay que pensar que el Estado y el Contexto son lo mismo)
 // el estado es la informacion que almacenamos en memoria y el contexto es lo que vamos a exponer a los demas componentes
@@ -7,7 +8,7 @@ import { createContext } from "react";
 export interface PlacesContextProps {
     isLoading: boolean,
     useLocation?: [ number, number ],
-    searchPlacesByTerm: (query: string) => Promise<any>,
+    searchPlacesByTerm: (query: string) => Promise<Feature[]>,
 }
 
 // Como estamos en TS tenemos que definir como luce este contexto

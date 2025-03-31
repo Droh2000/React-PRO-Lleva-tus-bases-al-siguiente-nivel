@@ -1,6 +1,7 @@
 // Cuando estamos con el contexto es bueno usar el Reducer porque no 
 // sabemos si las funcionalidades van a crecer el dia de manana
 
+import { Feature } from "../../interfaces/places";
 import { PlacesState } from "./PlacesProvider";
 
 // Esta es una funcion pura osea que solo se puede resolver con los argumentos que recibe sin requerir acceder a cosas del mundo exterior
@@ -13,7 +14,10 @@ type PlacesAction = {
     type: 'setUserLocation', // Cuando recibamos este tipo de accion, abajo definimos la informacion que vamos a estar recibiendo
     // En payload (La informacion que puede tener la accion) estamos esperando que venga los datos como [Longitud, Latitud]
     payload: [number, number]
-};
+} |
+// Los datos que obtenemos de la peticion con la funcion "searchPlacesByTerm" del archivo PlacesProvider, vamos a almacenar los datos en el State
+{ type: 'setPlaces', payload: Feature[] } |
+{ type: 'setloadingPlaces' };
 
 export const placesReducer = ( state: PlacesState, action: PlacesAction ): PlacesState => {
     // Evaluamos cada una de las acciones
@@ -23,6 +27,22 @@ export const placesReducer = ( state: PlacesState, action: PlacesAction ): Place
                 ...state,// Copiamos todas sus propiedades como se encuentran (Las esparcimos para crear un nuevo estado)
                 isLoading: false,// Porque ya termino de cargar al tener ya la informacion
                 useLocation: action.payload,
+            }
+        // Esta accion es para cuando estamos cargando nuevos lugares del mapa
+        case 'setloadingPlaces':
+            return {
+                ...state,
+                isLoadingPlaces: true,
+                // Limpiamos los lugares anteriores porque estamos buscando nuevos
+                places: []
+            }
+        // Esta accion es para cuando ya tengamos los lugares
+        case 'setPlaces':
+            // Solo los queremos establecer
+            return {
+                ...state, // Porque no queremos perder los lugares anteriores
+                isLoadingPlaces: false,// Porque ya los cargamos
+                places: action.payload
             }
         default:
             // Regresamos el state como tal sin cambios si no recibimos una accion valida
