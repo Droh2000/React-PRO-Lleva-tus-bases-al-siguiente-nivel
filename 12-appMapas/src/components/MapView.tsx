@@ -27,7 +27,7 @@ export const MapView = () => {
             // Este codigo lo sacamos de la documentacion
             const map = new mapboxgl.Map({
                 container: mapDiv.current!, // Como sabemos que si va a tener un valor le ponemos el !
-                style: 'mapbox://styles/mapbox/streets-v11',
+                style: 'mapbox://styles/mapbox/light-v10', // Tema del mapa
                 center: useLocation,
                 zoom: 14
             });
