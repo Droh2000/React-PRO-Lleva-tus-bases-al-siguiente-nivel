@@ -9,6 +9,9 @@ export interface PlacesContextProps {
     isLoading: boolean,
     useLocation?: [ number, number ],
     searchPlacesByTerm: (query: string) => Promise<Feature[]>,
+    // Tenemos que definir estos datos para que al usar el "PlacesContext" nos salgan las propiedades porque si esxiten pero no las podemos usar
+    isLoadingPlaces: boolean,
+    places: Feature[],
 }
 
 // Como estamos en TS tenemos que definir como luce este contexto

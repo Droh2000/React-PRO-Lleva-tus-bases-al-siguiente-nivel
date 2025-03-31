@@ -1,5 +1,6 @@
 import { ChangeEvent, useContext, useRef } from "react"
 import { PlacesContext } from "../context";
+import { SearchResult } from "./SearchResult";
 
 export const SearchBar = () => {
 
@@ -32,6 +33,12 @@ export const SearchBar = () => {
                 placeholder="Buscar Lugar..."
                 onChange={ onQueryChanged }
             />
+
+            {/*
+                Como ya tenemos los lugares cargados en el State (Store) solo hay que mostrarlos
+                en este lugar con este componente que creamos
+            */}
+            <SearchResult/>
         </div>
     )
 }
