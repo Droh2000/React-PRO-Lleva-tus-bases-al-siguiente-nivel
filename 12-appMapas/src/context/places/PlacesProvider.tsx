@@ -46,7 +46,12 @@ export const PlacesProvider = ({ children }: Props) => { // Recibe un JSX como a
     // Aqui queremos realizar toda la parte de la busquedad segun la palabra escrtia por el usuario en el campo de texto
     const searchPlacesByTerm = async( query: string ): Promise<Feature[]> => {
         // Si el usuario no escribio nada significa que quiere borrarlo
-        if( query.length === 0 ) return[];
+        // Vamos a implementar que al borrar el contenido del campo de texto se borren los resultados obtenidos
+        if( query.length === 0 ){
+            dispatch({ type: 'setPlaces', payload: [] });
+            return [];
+        }
+
         // Para hacer la peticion (ya tenemos datos preconfigurados en la variable) requerimos algunso datos adicionales como es la proximidad
         // en este caso verificamos si no existe
         if( !state.useLocation ) throw new Error('No hay ubicacion del usuario');
