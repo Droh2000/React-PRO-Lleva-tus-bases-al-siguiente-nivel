@@ -3,6 +3,8 @@ import { MapContext } from "./MapContext";
 import { useContext, useEffect, useReducer } from "react";
 import { MapReducer } from "./MapReducer";
 import { PlacesContext } from "../places/PlacesContext";
+import { direcctionsApi } from "../../apis";
+import { DirectionsResponse } from "../../interfaces/directions";
 
 export interface MapState {
     isMapReady: boolean;
@@ -90,7 +92,18 @@ export const MapProvider = ( {children}: Props) => {
 
     // Para poder juntar dos lugares, ocupamos el punto inicial y final que contiene cada uno sus coordenadas
     const getRouteBeetwenPoints = async (start: [number, number], end: [number, number]) => {
+        // Creamos el endpoint como viene en MapBox
+        const resp = await direcctionsApi.get<DirectionsResponse>(`/${ start.join(',') };${ end.join(',') }`);
 
+        // Esto lo hacemos para demostrar que tenemos estos datos por si lo querimos
+        const { distance, duration, geometry } = resp.data.routes[0];
+
+        let kms = distance / 1000;
+        kms = Math.round( kms * 100 );
+        kms /= 100;
+
+        const minutes = Math.floor( duration / 60 );
+        console.log({ kms, minutes });
     }
 
     return (

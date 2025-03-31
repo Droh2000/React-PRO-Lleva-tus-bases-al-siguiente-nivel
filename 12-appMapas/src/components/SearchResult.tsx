@@ -5,11 +5,11 @@ import { Feature } from "../interfaces/places";
 export const SearchResult = () => {
 
     // Requerimos el contexto para sacar los lugares
-    const { places, isLoadingPlaces } = useContext( PlacesContext );
+    const { places, isLoadingPlaces, useLocation } = useContext( PlacesContext );
 
     // Queremos que cuando se hace click en el cuadro (Que sale en los resultados de busquedad), lleve al usuario a ese lugar en especifico donde esta el marcador
     // asi que vamos a ocupar el mapa y por tanto el contexto correspondiente
-    const { map } = useContext( MapContext );
+    const { map, getRouteBeetwenPoints } = useContext( MapContext );
 
     // Esto es para que cuando el usuario haga click en el cuadro este se seleccione de otro color para distinguirlo de los demas
     const [ activeId, setActiveId ] = useState('');
@@ -23,6 +23,17 @@ export const SearchResult = () => {
             center: [lng, lat]
         });
     } 
+
+    const getRoute = ( place: Feature ) => {
+        // Si no existe no hagamos nada
+        // Este seria el inicio de la ubicacion
+        if( !useLocation ) return;
+
+        // El final de la ubicacion (No mandamos el center directamente porque por el tipo de dato no lo acepta)
+        const [ lng, lat ] = place.center;
+
+        getRouteBeetwenPoints(useLocation, [ lng, lat ]);
+    }
 
     // Hay detectar si es True para poner que se esta cargando
     if( isLoadingPlaces ){
@@ -62,7 +73,10 @@ export const SearchResult = () => {
                         </p>
                         
                         {/* Cambiamos el color del boton segun si esta seleccionada la caja o no */}
-                        <button className={`btn btn-sm ${ activeId === place.id ? 'btn-outline-light' : 'btn-outline-primary'}`}>
+                        <button 
+                            className={`btn btn-sm ${ activeId === place.id ? 'btn-outline-light' : 'btn-outline-primary'}`}
+                            onClick={ () => getRoute(place)}
+                        >
                             Direcciones
                         </button>
                     </li>
