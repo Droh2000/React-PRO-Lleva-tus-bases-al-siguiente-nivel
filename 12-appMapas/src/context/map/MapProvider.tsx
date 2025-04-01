@@ -1,4 +1,4 @@
-import { Map, Marker, Popup } from "mapbox-gl";
+import { AnySourceData, LngLatBounds, Map, Marker, Popup, SourceSpecification } from "mapbox-gl";
 import { MapContext } from "./MapContext";
 import { useContext, useEffect, useReducer } from "react";
 import { MapReducer } from "./MapReducer";
@@ -97,6 +97,8 @@ export const MapProvider = ( {children}: Props) => {
 
         // Esto lo hacemos para demostrar que tenemos estos datos por si lo querimos
         const { distance, duration, geometry } = resp.data.routes[0];
+        // Obtenemos todas las coordenadas
+        const { coordinates: coords } = geometry;
 
         let kms = distance / 1000;
         kms = Math.round( kms * 100 );
@@ -104,6 +106,68 @@ export const MapProvider = ( {children}: Props) => {
 
         const minutes = Math.floor( duration / 60 );
         console.log({ kms, minutes });
+
+        // Creamos el contenedor para que el mapa se posicione en los dos marcadores seleccionados y podamos ver los puntos completos
+        // A esto le pasamos el punto de inicio y el punto final
+        const bounds = new LngLatBounds(
+            // Aqui le decimos que contenga ese punto
+            start, start
+        );
+
+        // Recorremos todos los puntos de coordenadas que nos esta regresando
+        for(const coord of coords){
+            // Creamos una nueva coordenada la que almacenara el valor obtenido del bucle porque solo asi podemos agregarla con el Extends
+            const newCoord: [number, number] = [ coord[0], coord[1] ];
+            bounds.extend( newCoord );
+        }
+
+        // Para que se acomoden correctamente la pantalla segun los puntos
+        state.map?.fitBounds( bounds, {
+            padding: 200 // Para que no salgan los puntos muy a la orilla de la pantalla
+        });
+
+        // Polylined (Estos ejemplos los encontramos en la documentacion de Mapbox)
+        // Esto es para que se marque la ruta del punto a punto que seria el camino para llegar un lugar a otro
+        const sourceData: SourceSpecification = {
+            type: 'geojson',
+            data: {
+                type: 'FeatureCollection',
+                features: [
+                    {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: coords
+                        }
+                    }
+                ]
+            }
+        }
+
+        // Removemos la ruta ya que no pueden tener el mismo ID y queremos reutilizar este mismo ID
+        if( state.map?.getLayer('RouteString') ){
+            state.map.removeLayer('RouteString');
+            state.map.removeSource('state.map.remove');
+        }
+
+        // De Id le pusimos este String cualquiera
+        state.map?.addSource('RouteString', sourceData);
+
+        // Diseño
+        state.map?.addLayer({
+            id: 'RouteString',
+            type: 'line',
+            source: 'RouteString',
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            paint: {
+                'line-color': 'black',
+                'line-width': 3
+            }
+        });
     }
 
     return (
